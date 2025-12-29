@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tetris — Completo (Responsivo)</title>
+    <link rel="icon" href="Tetris.png" type="image/png">
+    <style>
+      :root {
+        --bg: #0f1226;
+        --panel: #15183a;
+        --text: #e6e8ff;
+        --muted: #9aa0c3;
+        --accent: #5be7c4;
+        --danger: #ff6b6b;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: radial-gradient(1000px 500px at 70% -10%, #1a1d3f 0%, #0f1226 60%);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        overscroll-behavior: none; /* evita rebotes en móviles */
+        touch-action: none;       /* bloquea desplazamiento / gestos por defecto */
+      }
+      .wrap {
+        display: grid;
+        grid-template-columns: 1fr auto 320px;
+        gap: 20px;
+        place-items: center stretch;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      h1 {
+        grid-column: 1 / -1;
+        margin: 0 0 4px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-shadow: 0 8px 36px rgba(0,0,0,.35);
+      }
+      .sub {
+        grid-column: 1 / -1;
+        margin: 0 0 16px 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .stage {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 16px;
+        align-content: start;
+      }
+      .panel {
+        background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+        padding: 16px;
+      }
+      canvas#board {
+        background: #080a16;
+        border-radius: 12px;
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), 0 15px 45px rgba(0,0,0,.5);
+        display: block;
+        touch-action: none;
+      }
+      .side {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .stats div {
+        background: rgba(0,0,0,.25);
+        border: 1px solid rgba(255,255,255,.06);
+        padding: 10px 12px;
+        border-radius: 10px;
+      }
+      .stats .label { color: var(--muted); font-size: .85rem; }
+      .stats .value { font-size: 1.15rem; font-weight: 700; }
+
+      .mini {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .mini canvas {
+        background: #0b0e20;
+        border-radius: 8px;
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 1 / 1;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+        touch-action: none;
+      }
+      .mini h3 { margin: 0 0 6px; font-size: .9rem; color: var(--muted) }
+
+      .controls { font-size: .9rem; color: var(--muted); line-height: 1.45; }
+      kbd {
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.15);
+        border-bottom-width: 2px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: .85em;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(10,12,25,.65);
+        backdrop-filter: blur(4px);
+        z-index: 10;
+        text-align: center;
+      }
+      .overlay.show { display: flex; }
+      .overlay .card {
+        background: var(--panel);
+        border: 1px solid rgba(255,255,255,.12);
+        padding: 24px;
+        border-radius: 16px;
+        min-width: 320px;
+      }
+      .overlay .card h2 { margin: 0 0 8px }
+      .overlay .card p { margin: 0 0 12px; color: var(--muted) }
+      .overlay .card .big { font-size: 2.5rem; font-weight: 800; margin: 0 0 6px; color: var(--accent) }
+      .btns { display: flex; gap: 10px; justify-content: center; margin-top: 6px }
+      button {
+        background: linear-gradient(180deg, #2ee6b8, #21c79d);
+        color: #041216;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 10px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(33,199,157,.35);
+      }
+      button.secondary { background: #2a2d52; color: var(--text); box-shadow: none }
+
+      /* Botones táctiles (consola) */
+      .touch-controls {
+        display:flex;
+        gap:10px;
+        justify-content:center;
+        margin-top:8px;
+        user-select:none;
+        -webkit-user-select:none;
+      }
+      .touch-btn {
+        width:56px;
+        height:56px;
+        border-radius:10px;
+        background:rgba(255,255,255,0.05);
+        border:3px solid rgba(0,0,0,0.08);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:800;
+        touch-action:none;
+      }
+      .touch-btn:active { transform: translateY(2px); }
+
+      @media (max-width: 900px) {
+        .wrap { grid-template-columns: 1fr; }
+        .side { grid-row: 3 }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Tetris</h1>
+      <p class="sub">Clásico con 7-bag, SRS, hold, sombra (ghost), niveles, puntuación y pausa.</p>
+
+      <div class="stage">
+        <div class="panel" id="boardPanel" style="display:flex;flex-direction:column;align-items:center;">
+          <canvas id="board" width="300" height="600" class=""></canvas>
+
+          <!-- Controles táctiles debajo del canvas -->
+          <div class="touch-controls" aria-hidden="false" style="margin-top:12px;">
+            <div class="touch-btn" data-action="left">⬅️</div>
+            <div class="touch-btn" data-action="rotate">↩️</div>
+            <div class="touch-btn" data-action="right">➡️</div>
+            <div class="touch-btn" data-action="down">⬇️</div>
+            <div class="touch-btn" data-action="drop">⏬</div>
+            <div class="touch-btn" data-action="hold">🔁</div>
+          </div>
+        </div>
+        <button type="reset" onclick="history.back()">Volver atras</button>
+      </div>
+      <div class="side">
+        <div class="panel">
+          <div class="stats">
+            <div>
+              <div class="label">Nivel</div>
+              <div id="level" class="value">1</div>
+            </div>
+            <div>
+              <div class="label">Líneas</div>
+              <div id="lines" class="value">0</div>
+            </div>
+            <div style="grid-column: 1 / -1">
+              <div class="label">Puntuación</div>
+              <div id="score" class="value" style="font-size:1.6rem">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Hold</h3>
+          <canvas id="hold" width="120" height="120"></canvas>
+        </div>
+
+        <div class="panel">
+          <h3>Siguientes</h3>
+          <div class="mini">
+            <canvas id="next1" width="120" height="120"></canvas>
+            <canvas id="next2" width="120" height="120"></canvas>
+            <canvas id="next3" width="120" height="120"></canvas>
+            <canvas id="next4" width="120" height="120"></canvas>
+          </div>
+        </div>
+
+        <div class="panel controls">
+          <b>Controles</b><br/>
+          <kbd>←</kbd>/<kbd>→</kbd> mover · <kbd>↓</kbd> caída suave<br/>
+          <kbd>Z</kbd> rotar CCW · <kbd>X</kbd>/<kbd>↑</kbd> rotar CW · <kbd>A</kbd> 180°<br/>
+          <kbd>Espacio</kbd> hard drop · <kbd>C</kbd> hold<br/>
+          <kbd>P</kbd> pausa · <kbd>R</kbd> reiniciar
+        </div>
+
+      </div>
+    </div>
+
+    <div class="overlay" id="gameOver">
+      <div class="card">
+        <h2>¡Game Over!</h2>
+        <div class="big" id="finalScore">0</div>
+        <p>Pulsa <kbd>R</kbd> para reiniciar</p>
+        <div class="btns">
+          <button id="restartBtn">Reiniciar</button>
+          <button class="secondary" id="closeBtn">Cerrar</button>
+        </div>
+      </div>
+    </div>
+    <script>
+"use strict";
+
+/* ----- Evitar scroll con teclas ----- */
+window.addEventListener("keydown", function (e) {
+  const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"];
+  if (keys.includes(e.key)) e.preventDefault();
+}, { passive: false });
+
+/* ================================
+   CONFIG GENERAL
+================================= */
+const COLS = 10, ROWS = 20;
+let SCALE = 30;  // tamaño fijo clásico
+const canvas = document.getElementById("board");
+const ctx = canvas.getContext("2d");
+
+// Mini canvases proporción estable
+const holdCanvas = document.getElementById("hold");
+const holdCtx = holdCanvas.getContext("2d");
+
+const nextCanvases = [
+  document.getElementById("next1"),
+  document.getElementById("next2"),
+  document.getElementById("next3"),
+  document.getElementById("next4")
+];
+const nextCtxs = nextCanvases.map(c => c.getContext("2d"));
+
+// UI
+const scoreEl = document.getElementById("score");
+const levelEl = document.getElementById("level");
+const linesEl = document.getElementById("lines");
+const overlay = document.getElementById("gameOver");
+const finalScoreEl = document.getElementById("finalScore");
+document.getElementById("restartBtn").onclick = () => restart();
+document.getElementById("closeBtn").onclick = () => overlay.classList.remove("show");
+
+/* ================================
+   COLORES Y FORMAS
+================================= */
+const COLORS = {
+  T: "#a78bfa",
+  I: "#22d3ee",
+  O: "#fde047",
+  S: "#34d399",
+  Z: "#f87171",
+  L: "#fb923c",
+  J: "#60a5fa",
+  GHOST: "rgba(255,255,255,.2)"
+};
+
+const SHAPES = {
+  T: [[0,1,0],[1,1,1],[0,0,0]],
+  I: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+  O: [[1,1],[1,1]],
+  S: [[0,1,1],[1,1,0],[0,0,0]],
+  Z: [[1,1,0],[0,1,1],[0,0,0]],
+  L: [[1,0,0],[1,1,1],[0,0,0]],
+  J: [[0,0,1],[1,1,1],[0,0,0]]
+};
+
+/* ================================
+   ROTACIONES + SRS
+================================= */
+const rotateMatrixCW = m => m[0].map((_, i) => m.map(r => r[i]).reverse());
+const rotateMatrixCCW = m => m[0].map((_, i) => m.map(r => r[i])).reverse();
+
+// SRS Kicks originales (intactos)
+const KICKS = {
+  JLSTZ: {
+    "0>R": [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+    "R>0": [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+    "R>2": [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+    "2>R": [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+    "2>L": [[0,0],[1,0],[1,1],[0,-2],[1,-2]],
+    "L>2": [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+    "L>0": [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+    "0>L": [[0,0],[1,0],[1,1],[0,-2],[1,-2]]
+  },
+  I: {
+    "0>R": [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+    "R>0": [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+    "R>2": [[0,0],[-1,0],[2,0],[-1,2],[2,-1]],
+    "2>R": [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+    "2>L": [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+    "L>2": [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+    "L>0": [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+    "0>L": [[0,0],[-1,0],[2,0],[-1,2],[2,-1]]
+  },
+  O: {}
+};
+
+/* ================================
+   ESTADO DEL JUEGO
+================================= */
+const SPAWN_X = 3;
+const SCORES = {1:100,2:300,3:500,4:800};
+const LINES_PER_LEVEL = 10;
+const BASE_GRAVITY = 1000;
+
+let board, queue, current, hold = null, holdUsed = false;
+let score = 0, lines = 0, level = 1;
+let dropTimer = 0, lastTime = 0;
+let paused = false, over = false;
+let lockElapsed = 0;
+const LOCK_DELAY = 500;
+
+/* ================================
+   NUEVO RESIZE FIJO (NO ADAPTABLE)
+================================= */
+function resizeGame() {
+
+  // tablero fijo
+  SCALE = 30;
+  canvas.width = COLS * SCALE;     // 300
+  canvas.height = ROWS * SCALE;    // 600
+  canvas.style.width = canvas.width + "px";
+  canvas.style.height = canvas.height + "px";
+
+  // minis proporcionales (decididas por mí)
+  const nextSize = 96;
+  const holdW = 128, holdH = 96;
+
+  nextCanvases.forEach(c => {
+    c.width = nextSize;
+    c.height = nextSize;
+    c.style.width = nextSize + "px";
+    c.style.height = nextSize + "px";
+  });
+
+  holdCanvas.width = holdW;
+  holdCanvas.height = holdH;
+  holdCanvas.style.width = holdW + "px";
+  holdCanvas.style.height = holdH + "px";
+
+  drawBoard();
+  drawMinis();
+}
+
+/* ELIMINADO:
+window.addEventListener("resize", resizeGame);
+*/
+
+/* ================================
+   PREVENCIÓN TOUCH
+================================= */
+window.addEventListener("touchmove", e => e.preventDefault(), { passive:false });
+
+function createBoard(w,h){
+  return Array.from({length:h},()=>Array(w).fill(null));
+}
+
+/* ================================
+   SPAWN
+================================= */
+function spawnPiece(){
+  if(queue.length<7) refillBag();
+  const type = queue.shift();
+  const shape = SHAPES[type].map(r=>r.slice());
+  current = { type, m:shape, x:SPAWN_X, y:-getTopOffset(shape), r:0 };
+  holdUsed = false;
+  if(collides(board,current)) gameOver();
+}
+
+function getTopOffset(m){
+  for(let y=0;y<m.length;y++) if(m[y].some(v=>v)) return y;
+  return 0;
+}
+
+function refillBag(){
+  const order=["T","I","O","S","Z","L","J"];
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  queue.push(...order);
+}
+
+/* ================================
+   RESET
+================================= */
+function reset(){
+  board=createBoard(COLS,ROWS);
+  queue=[];
+  score=0;lines=0;level=1;
+  dropTimer=0;lastTime=0;
+  paused=false;over=false;
+  hold=null;holdUsed=false;
+  lockElapsed=0;
+
+  refillBag();
+  refillBag();
+  spawnPiece();
+
+  updateUI();
+  resizeGame();
+}
+
+/* ================================
+   INPUTS / MOVIMIENTO
+================================= */
+function hardDrop(){
+  if(over||paused) return;
+  let d=0;
+  while(!collides(board,{...current,y:current.y+1})){ current.y++;d++;lockElapsed=0; }
+  score+=d*2;
+  merge();
+  clearLines();
+  spawnPiece();
+  updateUI();
+}
+
+function softDrop(){
+  if(over||paused) return;
+  if(!collides(board,{...current,y:current.y+1})){
+    current.y++; score+=1;
+  }
+  updateUI();
+}
+
+function move(dir){
+  if(over||paused) return;
+  const nx=current.x+dir;
+  if(!collides(board,{...current,x:nx})){
+    current.x=nx; lockElapsed=0;
+  }
+}
+
+function rotate(dir){
+  if(over||paused) return;
+  const old=current.m;
+  const rot = dir===2 ? rotateMatrixCW(rotateMatrixCW(old))
+            : dir===-1 ? rotateMatrixCCW(old)
+            : rotateMatrixCW(old);
+
+  const from=rotName(current.r);
+  const to=rotName((current.r+(dir===2?2:dir===-1?3:1))%4);
+
+  const system=current.type==="I"?KICKS.I:KICKS.JLSTZ;
+  const kicks=system[`${from}>${to}`]||[[0,0]];
+
+  for(const[kx,ky]of kicks){
+    const test={...current,m:rot,x:current.x+kx,y:current.y+ky};
+    if(!collides(board,test)){
+      current.m=rot;current.x=test.x;current.y=test.y;
+      current.r=idxFromName(to);lockElapsed=0;return;
+    }
+  }
+
+  if(current.type==="O"){
+    const test={...current,m:rot};
+    if(!collides(board,test)) current.m=rot;
+  }
+}
+
+function rotName(i){return["0","R","2","L"][i];}
+function idxFromName(n){return{0:0,R:1,2:2,L:3}[n];}
+
+function collides(grid,piece){
+  const m=piece.m;
+  for(let y=0;y<m.length;y++){
+    for(let x=0;x<m[y].length;x++){
+      if(!m[y][x]) continue;
+      const gx=x+piece.x, gy=y+piece.y;
+      if(gx<0||gx>=COLS||gy>=ROWS) return true;
+      if(gy>=0 && grid[gy][gx]) return true;
+    }
+  }
+  return false;
+}
+
+function merge(){
+  const m=current.m;
+  for(let y=0;y<m.length;y++){
+    for(let x=0;x<m[y].length;x++){
+      if(!m[y][x]) continue;
+      const gy=current.y+y, gx=current.x+x;
+      if(gy>=0) board[gy][gx]=current.type;
+    }
+  }
+}
+
+function clearLines(){
+  let c=0;
+  for(let y=ROWS-1;y>=0;y--){
+    if(board[y].every(v=>v)){
+      board.splice(y,1);
+      board.unshift(Array(COLS).fill(null));
+      c++;y++;
+    }
+  }
+  if(c){
+    score+=(SCORES[c]||0)*level;
+    lines+=c;
+    const newLevel=Math.floor(lines/LINES_PER_LEVEL)+1;
+    if(newLevel>level) level=newLevel;
+  }
+}
+
+function holdSwap(){
+  if(over||paused||holdUsed) return;
+  const prev=hold;
+  hold=current.type;
+  holdUsed=true;
+
+  if(prev){
+    const shape=SHAPES[prev].map(r=>r.slice());
+    current={type:prev,m:shape,x:SPAWN_X,y:-getTopOffset(shape),r:0};
+    if(collides(board,current)) gameOver();
+  } else {
+    spawnPiece();
+  }
+  drawMinis();
+}
+
+function gravityInterval(){
+  return Math.max(60,Math.floor(BASE_GRAVITY*Math.pow(0.92,level-1)));
+}
+
+/* ================================
+   RENDER
+================================= */
+function updateUI(){
+  scoreEl.textContent=score;
+  linesEl.textContent=lines;
+  levelEl.textContent=level;
+}
+
+function clearCanvas(c,color="#080a16"){
+  const g=c.getContext("2d");
+  g.fillStyle=color;
+  g.fillRect(0,0,c.width,c.height);
+}
+
+function drawCell(g,x,y,color,size){
+  g.fillStyle=color;
+  g.fillRect(x*size,y*size,size,size);
+  g.fillStyle="rgba(255,255,255,.12)";
+  g.fillRect(x*size,y*size,size,size*0.12);
+}
+
+function drawBoard(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  clearCanvas(canvas);
+
+  ctx.strokeStyle="rgba(255,255,255,.04)";
+  for(let x=0;x<=COLS;x++){
+    ctx.beginPath();ctx.moveTo(x*SCALE,0);ctx.lineTo(x*SCALE,canvas.height);ctx.stroke();
+  }
+  for(let y=0;y<=ROWS;y++){
+    ctx.beginPath();ctx.moveTo(0,y*SCALE);ctx.lineTo(canvas.width,y*SCALE);ctx.stroke();
+  }
+
+  for(let y=0;y<ROWS;y++){
+    for(let x=0;x<COLS;x++){
+      const t=board[y][x];
+      if(t) drawCell(ctx,x,y,COLORS[t],SCALE);
+    }
+  }
+
+  if(!current) return;
+
+  // ghost
+  const ghost={...current,m:current.m.map(r=>r.slice())};
+  while(!collides(board,{...ghost,y:ghost.y+1})) ghost.y++;
+  drawPiece(ghost,COLORS.GHOST);
+
+  // pieza actual
+  drawPiece(current,COLORS[current.type]);
+}
+
+function drawPiece(piece,color){
+  const m=piece.m;
+  for(let y=0;y<m.length;y++){
+    for(let x=0;x<m[y].length;x++){
+      if(!m[y][x]) continue;
+      const gx=piece.x+x, gy=piece.y+y;
+      if(gy>=0) drawCell(ctx,gx,gy,color,SCALE);
+    }
+  }
+}
+
+function drawMini(ctx2d,type){
+  clearCanvas(ctx2d.canvas,"#0b0e20");
+  if(!type) return;
+  const m=SHAPES[type];
+  const size=Math.floor(Math.min(ctx2d.canvas.width,ctx2d.canvas.height)/6);
+  const offsetX=Math.floor((ctx2d.canvas.width/size-m[0].length)/2);
+  const offsetY=Math.floor((ctx2d.canvas.height/size-m.length)/2);
+
+  for(let y=0;y<m.length;y++){
+    for(let x=0;x<m[y].length;x++){
+      if(!m[y][x]) continue;
+      drawCell(ctx2d,x+offsetX,y+offsetY,COLORS[type],size);
+    }
+  }
+}
+
+function drawMinis(){
+  drawMini(holdCtx,hold);
+  for(let i=0;i<nextCtxs.length;i++){
+    drawMini(nextCtxs[i],queue[i]||null);
+  }
+}
+
+/* ================================
+   GAME LOOP
+================================= */
+function update(time=0){
+  if(over||paused){requestAnimationFrame(update);return;}
+
+  const dt=time-lastTime;lastTime=time;
+  dropTimer+=dt;
+
+  if(dropTimer>=gravityInterval()){
+    stepDown();
+    dropTimer=0;
+  }
+
+  if(isGrounded()){
+    lockElapsed+=dt;
+    if(lockElapsed>=LOCK_DELAY){
+      merge();
+      clearLines();
+      spawnPiece();
+      lockElapsed=0;
+      updateUI();
+    }
+  } else lockElapsed=0;
+
+  drawBoard();
+  drawMinis();
+  requestAnimationFrame(update);
+}
+
+function isGrounded(){
+  return collides(board,{...current,y:current.y+1});
+}
+
+function stepDown(){
+  if(!collides(board,{...current,y:current.y+1})) current.y++;
+}
+
+function gameOver(){
+  over=true;
+  overlay.classList.add("show");
+  finalScoreEl.textContent=score;
+}
+
+function restart(){
+  overlay.classList.remove("show");
+  reset();
+}
+
+/* ================================
+   INPUTS TECLADO
+================================= */
+window.addEventListener("keydown",e=>{
+  const blocked=["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "];
+  if(blocked.includes(e.key)) e.preventDefault();
+},{passive:false});
+
+document.addEventListener("keydown",e=>{
+  if(e.repeat) e.preventDefault();
+  switch(e.key){
+    case "ArrowLeft": move(-1);break;
+    case "ArrowRight": move(1);break;
+    case "ArrowDown": softDrop();break;
+    case "ArrowUp": rotate(1);break;
+    case "z": case "Z": rotate(-1);break;
+    case "x": case "X": rotate(1);break;
+    case "a": case "A": rotate(2);break;
+    case " ": hardDrop();break;
+    case "c": case "C": holdSwap();break;
+    case "p": case "P": paused=!paused;break;
+    case "r": case "R": restart();break;
+  }
+});
+
+/* ================================
+   CONTROLES TACTILES
+================================= */
+const touchButtons=document.querySelectorAll(".touch-btn");
+const holdIntervals=new Map();
+
+function startHoldAction(key){
+  if(holdIntervals.has(key)) return;
+  runAction(key);
+  const id=setInterval(()=>runAction(key),120);
+  holdIntervals.set(key,id);
+}
+function stopHoldAction(key){
+  const id=holdIntervals.get(key);
+  if(id){clearInterval(id);holdIntervals.delete(key);}
+}
+
+function runAction(key){
+  switch(key){
+    case "left": move(-1);break;
+    case "right": move(1);break;
+    case "down": softDrop();break;
+    case "rotate": rotate(1);break;
+    case "drop": hardDrop();break;
+    case "hold": holdSwap();break;
+  }
+}
+
+touchButtons.forEach(btn=>{
+  const action=btn.dataset.action;
+
+  btn.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    if(["left","right","down"].includes(action)) startHoldAction(action);
+    else runAction(action);
+  });
+
+  btn.addEventListener("pointerup",e=>{
+    e.preventDefault();
+    stopHoldAction(action);
+  });
+
+  btn.addEventListener("pointerleave",e=>{
+    e.preventDefault();
+    stopHoldAction(action);
+  });
+
+  btn.addEventListener("touchend",e=>{
+    e.preventDefault();
+    stopHoldAction(action);
+  },{passive:false});
+
+  btn.addEventListener("touchcancel",e=>{
+    e.preventDefault();
+    stopHoldAction(action);
+  },{passive:false});
+});
+
+canvas.addEventListener("touchstart",e=>e.preventDefault(),{passive:false});
+canvas.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});
+
+/* ================================
+   START
+================================= */
+reset();
+requestAnimationFrame(update);
+// Debug opcional
+window._tetris={reset,resizeGame,hardDrop,softDrop,move,rotate,holdSwap};
+
+</script>
+</body>
+</html>
