@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adivina la Palabra - Ahorcado con Niveles</title>
+    <link rel="icon" href="Adivina.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 30px; max-width: 900px; width: 100%; }
+        h1 { text-align: center; color: #667eea; margin-bottom: 10px; font-size: 2.2em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .subtitle { text-align: center; color: #666; margin-bottom: 20px; font-size: 1em; }
+        .game-info { display:flex; gap:12px; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; }
+        .info-box { background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:12px 16px; border-radius:12px; font-weight:700; min-width:130px; text-align:center; box-shadow:0 4px 12px rgba(102,126,234,0.2); }
+        .info-box .label { font-size:0.85em; opacity:0.9; }
+        .info-box .value { font-size:1.1em; }
+        #pista { background:#f8f9fa; padding:14px; border-radius:12px; margin-bottom:18px; border-left:5px solid #667eea; }
+        #pista strong { color:#667eea; font-size:1em; }
+        .game-area { display:flex; gap:20px; margin-bottom:16px; flex-wrap:wrap; }
+        .hangman-container { flex:1; min-width:260px; display:flex; justify-content:center; align-items:center; }
+        #ahorcado-svg { width:100%; max-width:320px; height:360px; }
+        .word-container { flex:1; min-width:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        #palabra-display { font-size:2.2em; letter-spacing:8px; text-align:center; font-weight:700; color:#333; margin-bottom:18px; min-height:70px; display:flex; justify-content:center; align-items:center; }
+        .keyboard { display:grid; grid-template-columns: repeat(auto-fit, minmax(42px,1fr)); gap:8px; margin-bottom:12px; }
+        .key { background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border:none; padding:12px; border-radius:8px; font-size:1.05em; font-weight:700; cursor:pointer; transition:all .25s; box-shadow:0 4px 10px rgba(0,0,0,0.15); }
+        .key:hover:not(:disabled){ transform: translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,0.2); }
+        .key:disabled{ background:#ccc; cursor:not-allowed; opacity:0.6; }
+        .key.correct{ background: linear-gradient(135deg,#11998e 0%,#38ef7d 100%); }
+        .key.incorrect{ background: linear-gradient(135deg,#eb3349 0%,#f45c43 100%); }
+        .input-section { margin-bottom:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+        #palabra-input { flex:1; padding:12px; font-size:1em; border:2px solid #667eea; border-radius:8px; text-transform:lowercase; }
+        .button-group { display:flex; gap:8px; }
+        .btn { padding:10px 16px; font-size:1em; font-weight:700; border:none; border-radius:8px; cursor:pointer; min-width:120px; }
+        .btn-primary{ background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; }
+        .btn-secondary{ background: linear-gradient(135deg,#f093fb 0%,#f5576c 100%); color:white; }
+        #mensaje{ text-align:center; padding:12px; border-radius:10px; font-size:1em; font-weight:700; margin-top:8px; display:none; }
+        .mensaje-victoria{ background: linear-gradient(135deg,#11998e 0%,#38ef7d 100%); color:white; }
+        .mensaje-derrota{ background: linear-gradient(135deg,#eb3349 0%,#f45c43 100%); color:white; }
+        .letras-incorrectas{ text-align:center; margin-top:12px; padding:10px; background:#fff3cd; border-radius:8px; border-left:4px solid #ffc107; }
+        .letras-incorrectas strong{ color:#856404; }
+        @media (max-width:768px){ .container{ padding:18px; } h1{ font-size:1.6em; } #palabra-display{ font-size:1.4em; letter-spacing:6px; } .key{ padding:10px; font-size:0.95em; } }
+        @keyframes bounce{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        .bounce{ animation:bounce .45s ease; }
+        @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+        .shake{ animation:shake .45s ease; }
+
+       .btn-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 5000;
+}
+
+.btn-back button {
+  background-color: #3b0066;
+  color: #8affff; 
+  border: 4px solid #00aaff;
+  border-radius: 6px; 
+  padding: 15px 30px;
+  font-size: 16px; 
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  text-shadow: 0 0 7px #8affff, 0 0 10px #8affff;
+  box-shadow: 
+    0 0 10px #ff57f4,
+    0 0 20px #00aaff;  
+  transition: all 0.3s ease;
+}
+
+.btn-back button:hover {
+  background-color: #ff57f4; 
+  color: #1a0f30; 
+  box-shadow: 
+    0 0 15px #ff57f4,
+    0 0 25px #ff57f4,
+    0 0 35px #00aaff; 
+  text-shadow: 0 0 10px #ff57f4, 0 0 15px #ff57f4;
+  transform: translateY(-2px);
+}
+    </style>
+</head>
+<body>
+
+    <div class="btn-back">
+        <button onclick="window.history.back()">⬅ Volver</button>
+    </div>
+
+    <div class="container">
+        <h1>🎮 Adivina la Palabra</h1>
+        <p class="subtitle">Completa las palabras requeridas para subir de nivel. Cada nivel sube la cantidad de palabras a adivinar.</p>
+
+        <div class="game-info">
+            <div class="info-box">
+                <div class="label">❤️ Intentos Restantes</div>
+                <div class="value" id="intentos">6</div>
+            </div>
+            <div class="info-box">
+                <div class="label">📏 Longitud</div>
+                <div class="value" id="longitud">-</div>
+            </div>
+            <div class="info-box">
+                <div class="label">⭐ Nivel</div>
+                <div class="value" id="nivel">1</div>
+            </div>
+            <div class="info-box">
+                <div class="label">🧩 Progreso</div>
+                <div class="value" id="progreso">0 / 3</div>
+            </div>
+        </div>
+
+        <div id="pista"><strong>💡 Pista:</strong> <span id="pista-text">Cargando...</span></div>
+
+        <div class="game-area">
+            <div class="hangman-container">
+                <svg id="ahorcado-svg" viewBox="0 0 200 250" aria-hidden="true">
+                    <line x1="10" y1="230" x2="150" y2="230" stroke="#333" stroke-width="4"/>
+                    <line x1="50" y1="230" x2="50" y2="20" stroke="#333" stroke-width="4"/>
+                    <line x1="50" y1="20" x2="130" y2="20" stroke="#333" stroke-width="4"/>
+                    <line x1="130" y1="20" x2="130" y2="50" stroke="#333" stroke-width="2"/>
+                    <circle id="cabeza" cx="130" cy="70" r="20" stroke="#333" stroke-width="3" fill="none" style="display:none;" />
+                    <line id="cuerpo" x1="130" y1="90" x2="130" y2="150" stroke="#333" stroke-width="3" style="display:none;" />
+                    <line id="brazo-izq" x1="130" y1="110" x2="100" y2="130" stroke="#333" stroke-width="3" style="display:none;" />
+                    <line id="brazo-der" x1="130" y1="110" x2="160" y2="130" stroke="#333" stroke-width="3" style="display:none;" />
+                    <line id="pierna-izq" x1="130" y1="150" x2="110" y2="190" stroke="#333" stroke-width="3" style="display:none;" />
+                    <line id="pierna-der" x1="130" y1="150" x2="150" y2="190" stroke="#333" stroke-width="3" style="display:none;" />
+                </svg>
+            </div>
+
+            <div class="word-container">
+                <div id="palabra-display">_ _ _ _ _</div>
+            </div>
+        </div>
+
+        <div class="keyboard" id="teclado" aria-hidden="false"></div>
+
+        <div class="input-section">
+            <input type="text" id="palabra-input" placeholder="O escribe la palabra completa aquí..." maxlength="30" autocomplete="off">
+            <div class="button-group">
+                <button class="btn btn-primary" id="adivinar-btn">🎯 Adivinar</button>
+                <button class="btn btn-secondary" id="nuevo-juego-btn">🔄 Reiniciar Nivel</button>
+                <button class="btn btn-secondary" id="siguiente-palabra-btn" style="display:none;">➡ Siguiente Palabra</button>
+            </div>
+        </div>
+
+        <div id="letras-incorrectas-container" class="letras-incorrectas" style="display:none;">
+            <strong>❌ Letras incorrectas:</strong> <span id="letras-incorrectas"></span>
+        </div>
+
+        <div id="mensaje"></div>
+    </div>
+
+    <script>
+        const LEVELS = {
+            1: ['sol','casa','perro','mesa','gato','luz','mar','pan','oro','verde'],
+            2: ['montana','avion','pelota','frutero','camiseta','barco','playa','isla','reloj','libro'],
+            3: ['astronauta','computadora','biblioteca','dinosaurio','volcan','programa','lenguaje','teclado','monitor','matematica'],
+            4: ['entrevista','bicicleta','electricidad','arquitectura','fotografia','restaurante','gimnasio','historia','geografia','economia'],
+            5: ['biotecnologia','criptomoneda','inteligencia','sostenibilidad','neurociencia','microbiologia','ingenieria','plasmagrafia','urbanizacion','filosofia']
+        };
+
+        // Nuevo objeto para pistas específicas por palabra
+        const HINTS = {
+            // Nivel 1
+            'sol': 'Fuente de luz y calor de nuestro sistema.',
+            'casa': 'Lugar donde vives con tu familia.',
+            'perro': 'El mejor amigo del hombre. Hace "guau".',
+            'mesa': 'Mueble con patas y una superficie plana.',
+            'gato': 'Animal doméstico que hace "miau".',
+            'luz': 'Lo que necesitas para ver en la oscuridad.',
+            'mar': 'Gran masa de agua salada.',
+            'pan': 'Alimento básico hecho de harina y levadura.',
+            'oro': 'Metal precioso, de color amarillo brillante.',
+            'verde': 'Color de la hierba y la mayoría de las hojas.',
+            // Nivel 2
+            'montana': 'Gran elevación natural del terreno.',
+            'avion': 'Medio de transporte que vuela.',
+            'pelota': 'Objeto esférico que se usa para muchos deportes.',
+            'frutero': 'Recipiente para poner manzanas, plátanos, etc.',
+            'camiseta': 'Prenda de vestir que cubre el torso.',
+            'barco': 'Medio de transporte que navega sobre el agua.',
+            'playa': 'Ribera de un mar o río, cubierta de arena.',
+            'isla': 'Porción de tierra rodeada de agua por todas partes.',
+            'reloj': 'Instrumento para medir el tiempo.',
+            'libro': 'Conjunto de hojas escritas y encuadernadas.',
+            // Nivel 3
+            'astronauta': 'Persona que viaja al espacio exterior.',
+            'computadora': 'Máquina electrónica para procesar información.',
+            'biblioteca': 'Lugar donde se guardan muchos libros.',
+            'dinosaurio': 'Reptil prehistórico, extinto hace millones de años.',
+            'volcan': 'Abertura en la tierra que expulsa lava y ceniza.',
+            'programa': 'Conjunto de instrucciones para una computadora.',
+            'lenguaje': 'Sistema de comunicación verbal o escrito.',
+            'teclado': 'Dispositivo con letras y números para escribir.',
+            'monitor': 'Pantalla de la computadora.',
+            'matematica': 'Ciencia que estudia los números y las formas.',
+            // Nivel 4
+            'entrevista': 'Reunión para hacer preguntas y conocer a alguien.',
+            'bicicleta': 'Vehículo de dos ruedas impulsado por pedales.',
+            'electricidad': 'Forma de energía que se usa para hacer funcionar aparatos.',
+            'arquitectura': 'Arte y técnica de diseñar y construir edificios.',
+            'fotografia': 'Arte de capturar imágenes con una cámara.',
+            'restaurante': 'Establecimiento donde se sirve comida.',
+            'gimnasio': 'Lugar para hacer ejercicio y deporte.',
+            'historia': 'Ciencia que estudia el pasado.',
+            'geografia': 'Ciencia que estudia la superficie terrestre.',
+            'economia': 'Ciencia que estudia la producción y distribución de riqueza.',
+            // Nivel 5
+            'biotecnologia': 'Uso de sistemas biológicos para productos tecnológicos.',
+            'criptomoneda': 'Moneda digital descentralizada.',
+            'inteligencia': 'Capacidad de razonar, planificar y resolver problemas.',
+            'sostenibilidad': 'Capacidad de satisfacer necesidades sin comprometer el futuro.',
+            'neurociencia': 'Estudio científico del sistema nervioso.',
+            'microbiologia': 'Estudio de los organismos microscópicos.',
+            'ingenieria': 'Aplicación de la ciencia para diseñar y construir cosas.',
+            'plasmagrafia': 'Técnica de imagenología (palabra más compleja para nivel alto).',
+            'urbanizacion': 'Proceso de crecimiento de las ciudades.',
+            'filosofia': 'Estudio de problemas fundamentales acerca de la existencia.'
+        };
+
+        // Cantidad de palabras a completar por nivel (va aumentando)
+        const WORDS_TO_COMPLETE = {1:3, 2:4, 3:5, 4:6, 5:7};
+        const MAX_LEVEL = 5;
+
+        // Estado del juego (se mantiene igual)
+        let currentLevel = 1;
+        let wordsCompletedInLevel = 0;
+        let currentWord = '';
+        let currentHint = '';
+        let guessedLetters = new Set();
+        let wrongLetters = new Set();
+        let remainingAttempts = 6;
+        let gameActive = true;
+
+        // DOM (se mantiene igual)
+        const palabraDisplay = document.getElementById('palabra-display');
+        const pistaText = document.getElementById('pista-text');
+        const intentosSpan = document.getElementById('intentos');
+        const longitudSpan = document.getElementById('longitud');
+        const teclado = document.getElementById('teclado');
+        const mensaje = document.getElementById('mensaje');
+        const palabraInput = document.getElementById('palabra-input');
+        const adivinarBtn = document.getElementById('adivinar-btn');
+        const nuevoJuegoBtn = document.getElementById('nuevo-juego-btn');
+        const siguienteBtn = document.getElementById('siguiente-palabra-btn');
+        const letrasIncorrectasContainer = document.getElementById('letras-incorrectas-container');
+        const letrasIncorrectasSpan = document.getElementById('letras-incorrectas');
+        const nivelSpan = document.getElementById('nivel');
+        const progresoSpan = document.getElementById('progreso');
+
+        const hangmanParts = ['cabeza','cuerpo','brazo-izq','brazo-der','pierna-izq','pierna-der'];
+
+        // --- Inicialización y Lógica de Juego (se mantiene igual) ---
+        function initLevel() {
+            wordsCompletedInLevel = 0;
+            nivelSpan.textContent = currentLevel;
+            updateProgress();
+            newWord();
+        }
+
+        function newWord() {
+            // Selecciona palabra aleatoria que no sea la misma que la actual
+            const pool = LEVELS[currentLevel];
+            // Asegurarse de que no se repita inmediatamente (lógica opcional)
+            let newWordCandidate;
+            do {
+                newWordCandidate = pool[Math.floor(Math.random()*pool.length)];
+            } while (newWordCandidate === currentWord && pool.length > 1);
+
+            currentWord = newWordCandidate;
+            currentHint = generateHintFor(currentWord);
+
+            guessedLetters = new Set();
+            wrongLetters = new Set();
+            remainingAttempts = 6;
+            gameActive = true;
+
+            // UI
+            pistaText.textContent = currentHint;
+            longitudSpan.textContent = currentWord.length + ' letras';
+            intentosSpan.textContent = remainingAttempts;
+            mensaje.style.display = 'none';
+            letrasIncorrectasContainer.style.display = 'none';
+            palabraInput.value = '';
+            hideHangmanParts();
+            createKeyboard();
+            updateWordDisplay();
+            siguienteBtn.style.display = 'none';
+        }
+
+        // Función de pista MEJORADA
+        function generateHintFor(word){
+            // 1. Busca una pista específica en el objeto HINTS
+            const specificHint = HINTS[word];
+            if (specificHint) {
+                return specificHint;
+            }
+
+            // 2. Si no hay una pista específica, usa la genérica
+            return `Empieza con '${word[0].toUpperCase()}' y tiene ${word.length} letras`;
+        }
+
+        // El resto de tus funciones se mantienen sin cambios:
+        function createKeyboard() {
+            const letters = 'abcdefghijklmnñopqrstuvwxyz'.split('');
+            teclado.innerHTML = '';
+            letters.forEach(l => {
+                const btn = document.createElement('button');
+                btn.className = 'key';
+                btn.textContent = l.toUpperCase();
+                btn.addEventListener('click', () => handleLetter(l, btn));
+                teclado.appendChild(btn);
+            });
+        }
+
+        function handleLetter(letter, btn) {
+            if (!gameActive) return;
+            // Manejar 'ñ' si la palabra la contiene (asegurarse de que las palabras en LEVELS no la tengan si no se desea)
+            const normalizedLetter = letter === 'ñ' ? letter : letter.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
+            
+            // Si la palabra contiene acentos, esta normalización podría fallar. 
+            // Para simplicidad, se asume que las palabras en LEVELS no tienen acentos.
+
+            if (guessedLetters.has(normalizedLetter) || wrongLetters.has(normalizedLetter)) return;
+
+            if (currentWord.includes(normalizedLetter)) {
+                guessedLetters.add(normalizedLetter);
+                btn.classList.add('correct');
+                animateDisplay('bounce');
+                updateWordDisplay();
+                checkWin();
+            } else {
+                wrongLetters.add(normalizedLetter);
+                btn.classList.add('incorrect');
+                remainingAttempts--;
+                intentosSpan.textContent = remainingAttempts;
+                showHangmanPart();
+                updateWrongLettersUI();
+                animateDisplay('shake');
+                if (remainingAttempts === 0) endRound(false);
+            }
+            btn.disabled = true;
+        }
+
+        function updateWordDisplay() {
+            const display = currentWord.split('').map(ch => guessedLetters.has(ch) ? ch.toUpperCase() : '_').join(' ');
+            palabraDisplay.textContent = display;
+        }
+
+        function updateWrongLettersUI(){
+            if (wrongLetters.size > 0){
+                letrasIncorrectasContainer.style.display = 'block';
+                letrasIncorrectasSpan.textContent = Array.from(wrongLetters).map(l=>l.toUpperCase()).join(', ');
+            } else {
+                letrasIncorrectasContainer.style.display = 'none';
+            }
+        }
+
+        function showHangmanPart(){
+            const index = 6 - remainingAttempts - 1; // 0..5
+            if (index >=0 && index < hangmanParts.length){
+                document.getElementById(hangmanParts[index]).style.display = 'block';
+            }
+        }
+
+        function hideHangmanParts(){
+            hangmanParts.forEach(p => { document.getElementById(p).style.display = 'none'; });
+        }
+
+        function animateDisplay(cls){
+            palabraDisplay.classList.add(cls);
+            setTimeout(()=> palabraDisplay.classList.remove(cls), 400);
+        }
+
+        function checkWin(){
+            const won = currentWord.split('').every(ch => guessedLetters.has(ch));
+            if (won) endRound(true);
+        }
+
+        function guessWholeWord(){
+            if (!gameActive) return;
+            const attempt = palabraInput.value.toLowerCase().trim();
+            if (!attempt) return;
+            if (attempt === currentWord){
+                // reveal
+                currentWord.split('').forEach(ch => guessedLetters.add(ch));
+                updateWordDisplay();
+                endRound(true);
+            } else {
+                remainingAttempts--;
+                intentosSpan.textContent = remainingAttempts;
+                showHangmanPart();
+                palabraInput.value = '';
+                animateDisplay('shake');
+                if (remainingAttempts === 0) endRound(false);
+            }
+        }
+
+        function endRound(won){
+            gameActive = false;
+            mensaje.style.display = 'block';
+            if (won){
+                mensaje.className = 'mensaje-victoria';
+                mensaje.innerHTML = `🎉 ¡Palabra correcta! Era <strong>${currentWord.toUpperCase()}</strong>`;
+                wordsCompletedInLevel++;
+                updateProgress();
+
+                if (wordsCompletedInLevel >= WORDS_TO_COMPLETE[currentLevel]){
+                    if (currentLevel < MAX_LEVEL){
+                        mensaje.innerHTML += `<br>⭐ Completaste el nivel ${currentLevel}! Sube al siguiente nivel.`;
+                        setTimeout(() => {
+                            currentLevel++;
+                            nivelSpan.textContent = currentLevel;
+                            wordsCompletedInLevel = 0;
+                            updateProgress();
+                            newWord();
+                        }, 1200);
+                        return;
+                    } else {
+                        mensaje.innerHTML += `<br>🏆 ¡Completaste el juego!`;
+                    }
+                }
+                siguienteBtn.style.display = 'inline-block';
+            } else {
+                mensaje.className = 'mensaje-derrota';
+                mensaje.innerHTML = `💀 ¡Te quedaste sin intentos! La palabra era <strong>${currentWord.toUpperCase()}</strong>`;
+                currentWord.split('').forEach(ch => guessedLetters.add(ch));
+                updateWordDisplay();
+                siguienteBtn.style.display = 'inline-block';
+            }
+            Array.from(teclado.children).forEach(b => b.disabled = true);
+        }
+
+        function updateProgress(){
+            const needed = WORDS_TO_COMPLETE[currentLevel];
+            progresoSpan.textContent = `${wordsCompletedInLevel} / ${needed}`;
+        }
+
+        // Eventos
+        adivinarBtn.addEventListener('click', guessWholeWord);
+        nuevoJuegoBtn.addEventListener('click', () => {
+            wordsCompletedInLevel = 0;
+            updateProgress();
+            newWord();
+        });
+        siguienteBtn.addEventListener('click', () => {
+            newWord();
+        });
+
+        palabraInput.addEventListener('keypress', e => { if (e.key === 'Enter') guessWholeWord(); });
+
+        // Iniciar juego
+        initLevel();
+    </script>
+</body>
+</html>
