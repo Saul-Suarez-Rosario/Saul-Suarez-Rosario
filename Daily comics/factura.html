@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Comics - Inicio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="imagen/2.png" type="image/png">
+  
+  <style>
+    .header {
+      display: flex;
+      justify-content: space-between; /* Separa los grupos a los extremos */
+      align-items: center;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .logo-header {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      /* El espacio ahora se maneja con gap */
+    }
+
+    .logo-header:hover {
+      transform: scale(1.1);
+    }
+
+    .logo-header img {
+      height: 80px;
+      margin: 0;
+    }
+
+    .header-group-left {
+      display: flex;
+      align-items: center;
+      gap: 20px; /* Espacio entre el botón de volver y el logo */
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 0.95em;
+    }
+
+    .nav-buttons button {
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-buttons button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.4); filter: brightness(1.15); }
+
+    .btn-back { background-color: #0057B8; border: 1px solid #003D82; color: #fff; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; } /* Azul Superman */
+    .btn-back:hover { background-color: #003D82; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); } /* Efecto hover */
+    .nav-buttons .btn-info { background-color: #17a2b8; color: #fff; font-weight: bold; border: 1px solid #117a8b; } /* Cian para Nosotros */
+    .nav-buttons .btn-home { background-color: #DA291C; color: #fff; border: 1px solid #B01F14; } /* Rojo Superman */
+    .nav-buttons .btn-logout { background-color: #343a40; border: 1px solid #c21515; } /* Gris oscuro para 'Cerrar Sesión' */
+    .nav-buttons .btn-login { background-color: #28a745; border: 1px solid #1e7e34; } /* Verde para Login */
+
+    /* Nuevo estilo para el selector de moneda */
+    .currency-select {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 32px 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 14px;
+      font-size: 14px;
+    }
+    .currency-select:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: #ffcc00;
+      color: #ffcc00;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffcc00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    }
+    .currency-select option {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(194, 21, 21, 0.3), rgba(0, 0, 0, 0.5));
+      padding: 30px;
+      margin: 20px 0;
+      border-radius: 10px;
+      border-left: 5px solid #ffcc00;
+      text-align: center;
+    }
+
+    .welcome-banner h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 2.5em;
+    }
+
+    .welcome-banner p {
+      margin: 10px 0 0 0;
+      font-style: italic;
+      color: #ddd;
+    }
+
+    .products-title {
+      text-align: center;
+      margin: 50px 0 30px 0;
+      font-size: 2.2em;
+      color: #ffcc00;
+    }
+
+    .product-card a {
+      display: block;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .product-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .product-card img {
+      height: 300px;
+      object-fit: contain;
+      margin: 0 0 15px 0;
+    }
+
+    .product-card h3 {
+      flex-grow: 1;
+    }
+
+    .product-card .btn-view {
+      background-color: #c21515;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .product-card .btn-view:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .visible {
+      display: block !important;
+      animation: fadeInOut 3s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .welcome-banner h1 {
+        font-size: 1.8em;
+      }
+
+      .products-title {
+        font-size: 1.5em;
+      }
+    }
+
+    .header-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ffcc00;
+      cursor: pointer;
+      display: none; /* Se muestra con JS si hay usuario */
+      transition: transform 0.3s ease;
+    }
+
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 0 auto 30px;
+      max-width: 800px;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      padding: 10px 25px;
+      border: 2px solid #c21515;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+
+    .category-btn:hover, .category-btn.active {
+      background-color: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+      transform: scale(1.05);
+    }
+    
+    .product-card { transition: opacity 0.4s ease; }
+
+    /* Estilos para la sección de Más Vendidos */
+    .best-sellers-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      padding: 0 20px;
+    }
+
+    .best-seller-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #ffcc00;
+      border-radius: 15px;
+      padding: 15px;
+      width: 220px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .best-seller-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.3);
+    }
+
+    .best-seller-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .best-seller-card .btn-view {
+      background-color: #c21515;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .best-seller-card .btn-view:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .best-seller-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: linear-gradient(45deg, #ffcc00, #ffeb3b);
+      color: #000;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.85em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+
+    .card-price {
+      color: #ffcc00;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 5px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="visitCount">Cargando visitas...</div>
+
+  <div class="header">
+    <div class="header-group-left">
+      <div class="logo-header">
+        <img src="imagen/logo1.png" id="logoImage" alt="Daily Comics Logo">
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="window.location.href='../Daily.html'"> ⬅️ Volver atrás</button>
+      <button class="btn-info" onclick="irANosotros()">ℹ️ Nosotros</button>
+      <button id="btnLogin" class="btn-login" onclick="irALogin()">🔑 Login</button>
+      <select id="currencySelector" class="currency-select" onchange="changeGlobalCurrency(this.value)">
+        <option value="RD$">RD$ - Peso Dominicano</option>
+        <option value="USD">USD - Dólar EE.UU.</option>
+        <option value="MXN">MXN - Peso Mexicano</option>
+        <option value="PEN">PEN - Sol Peruano</option>
+        <option value="BRL">BRL - Real Brasileño</option>
+      </select>
+      <img id="header-profile-pic" class="header-avatar" src="" alt="Avatar" onclick="irAPerfil()" title="Ir a mi perfil">
+    </div>
+  </div>
+
+  <div id="welcomeMessage" class="oculto" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(194, 21, 21, 0.95); padding: 30px 50px; border-radius: 10px; border: 3px solid #ffcc00; z-index: 1000; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); font-size: 1.5em; font-weight: 700;">
+    ¡Bienvenid@ a DailyComics!
+  </div>
+
+  <div class="welcome-banner">
+    <h1>🎬 Daily Comics</h1>
+    <p>Tu Tienda Virtual de Cómics Favoritos</p>
+  </div>
+
+  <!-- Sección de Más Vendidos -->
+  <h2 class="products-title">🔥 Cómics Más Vendidos</h2>
+  
+  <div class="best-sellers-container">
+    <div class="best-seller-card">
+      <div class="best-seller-badge">#1 TOP</div>
+      <a href="Batman Dark Knight.html">
+        <div class="product-card-content">
+          <img src="imagen/Batman Dark Knight.png" alt="Batman">
+          <h3>Batman: Dark Knight</h3>
+          <p class="card-price" data-pesos="420">RD$ 420</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="best-seller-card">
+      <div class="best-seller-badge">#2 TOP</div>
+      <a href="The Amazing Spider Man.html">
+        <div class="product-card-content">
+          <img src="imagen/The Amazing Spider Man.png" alt="Spiderman">
+          <h3>The Amazing Spider Man</h3>
+          <p class="card-price" data-pesos="400">RD$ 400</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="best-seller-card">
+      <div class="best-seller-badge">#3 TOP</div>
+      <a href="Superman Legacy.html">
+        <div class="product-card-content">
+          <img src="imagen/Superman Legacy.jpg" alt="Superman">
+          <h3>Superman: Legacy</h3>
+          <p class="card-price" data-pesos="450">RD$ 450</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <h2 class="products-title">� Nuestros Cómics Destacados</h2>
+
+  <div class="category-filter">
+    <button class="category-btn active" onclick="filterComics('all', this)">Todos</button>
+    <button class="category-btn" onclick="filterComics('accion', this)">💥 Acción</button>
+    <button class="category-btn" onclick="filterComics('marvel', this)">🔴 Marvel</button>
+    <button class="category-btn" onclick="filterComics('dc', this)">🔵 DC Comics</button>
+    <button class="category-btn" onclick="filterComics('velocidad', this)">⚡ Velocidad</button>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" data-category="accion dc">
+      <a href="Batman Dark Knight.html">
+        <div class="product-card-content">
+          <img src="imagen/Batman Dark Knight.png" alt="Batman Dark Knight">
+          <h3>Batman: Dark Knight</h3>
+          <p class="card-price" data-pesos="420">RD$ 420</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="The Amazing Spider Man.html">
+        <div class="product-card-content">
+          <img src="imagen/The Amazing Spider Man.png" alt="The Amazing Spider Man">
+          <h3>The Amazing Spider Man</h3>
+          <p class="card-price" data-pesos="400">RD$ 400</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc">
+      <a href="Superman Legacy.html">
+        <div class="product-card-content">
+          <img src="imagen/Superman Legacy.jpg" alt="Superman Legacy">
+          <h3>Superman: Legacy</h3>
+          <p class="card-price" data-pesos="450">RD$ 450</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc">
+      <a href="superman.html">
+        <div class="product-card-content">
+          <img src="imagen/superman.jpg" alt="Superman">
+          <h3>Superman</h3>
+          <p class="card-price" data-pesos="360">RD$ 360</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="x-men.html">
+        <div class="product-card-content">
+          <img src="imagen/x-men.jpg" alt="X-Men">
+          <h3>X-Men</h3>
+          <p class="card-price" data-pesos="290">RD$ 290</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="spiderman.html">
+        <div class="product-card-content">
+          <img src="imagen/spiderman.png" alt="Spiderman">
+          <h3>Spiderman</h3>
+          <p class="card-price" data-pesos="275">RD$ 275</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc velocidad">
+      <a href="flash.html">
+        <div class="product-card-content">
+          <img src="imagen/flash.jpg" alt="Flash">
+          <h3>Flash</h3>
+          <p class="card-price" data-pesos="260">RD$ 260</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc velocidad">
+      <a href="flashs.html">
+        <div class="product-card-content">
+          <img src="imagen/The Flash.png" alt="Flash Especial">
+          <h3>Flash Especial</h3>
+          <p class="card-price" data-pesos="390">RD$ 390</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc">
+      <a href="batman.html">
+        <div class="product-card-content">
+          <img src="imagen/batman.jpg" alt="Batman">
+          <h3>Batman</h3>
+          <p class="card-price" data-pesos="350">RD$ 350</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="velocidad aventura">
+      <a href="sonic.html">
+        <div class="product-card-content">
+          <img src="imagen/sonic.jpeg" alt="Sonic">
+          <h3>Sonic</h3>
+          <p class="card-price" data-pesos="250">RD$ 250</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="carnage.html">
+        <div class="product-card-content">
+          <img src="imagen/carnage.jpeg" alt="Carnage">
+          <h3>Carnage</h3>
+          <p class="card-price" data-pesos="300">RD$ 300</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion dc">
+      <a href="wonderwoman.html">
+        <div class="product-card-content">
+          <img src="imagen/Wonder Woman.png" alt="Wonder Woman">
+          <h3>Wonder Woman</h3>
+          <p class="card-price" data-pesos="325">RD$ 325</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="ironman.html">
+        <div class="product-card-content">
+          <img src="imagen/Iron Man.png" alt="Iron Man">
+          <h3>Iron Man</h3>
+          <p class="card-price" data-pesos="375">RD$ 375</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="captainamerica.html">
+        <div class="product-card-content">
+          <img src="imagen/Captain America.png" alt="Captain America">
+          <h3>Captain America</h3>
+          <p class="card-price" data-pesos="340">RD$ 340</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="product-card" data-category="accion marvel">
+      <a href="hulk.html">
+        <div class="product-card-content">
+          <img src="imagen/Hulk.png" alt="Hulk">
+          <h3>Hulk</h3>
+          <p class="card-price" data-pesos="315">RD$ 315</p>
+          <div class="btn-view">Ver Detalles</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Funciones de navegación
+    function irANosotros() {
+      window.location.href = "nosotros.html";
+    }
+
+    function irAInicio() {
+      window.location.href = "factura.html";
+    }
+
+    function irAPerfil() {
+      window.location.href = "perfil.html";
+    }
+
+    function irALogin() {
+      // Limpiamos la sesión antes de redirigir
+      sessionStorage.removeItem('loggedInUser');
+      window.location.href = "login.html";
+    }
+
+    // Configuración de monedas (Tasas aproximadas respecto al Peso Dominicano)
+    const CURRENCIES = {
+        'RD$': { rate: 1, symbol: 'RD$' },
+        'USD': { rate: 0.016, symbol: 'US$' },
+        'MXN': { rate: 0.30, symbol: 'MX$' }, // Peso Mexicano
+        'PEN': { rate: 0.06, symbol: 'S/' },  // Sol Peruano
+        'BRL': { rate: 0.09, symbol: 'R$' }   // Real Brasileño
+    };
+
+    // Currency Change
+    function changeGlobalCurrency(currency) {
+        sessionStorage.setItem('currency', currency);
+        updatePricesDisplay();
+    }
+
+    function updateCurrencySelector() {
+        const currency = sessionStorage.getItem('currency') || 'RD$';
+        const selector = document.getElementById('currencySelector');
+        if (selector) {
+            selector.value = currency;
+        }
+    }
+
+    function updatePricesDisplay() {
+        const currency = sessionStorage.getItem('currency') || 'RD$';
+        const prices = document.querySelectorAll('.card-price');
+        const currencyData = CURRENCIES[currency] || CURRENCIES['RD$'];
+
+        prices.forEach(price => {
+            const valorPesos = parseFloat(price.getAttribute('data-pesos'));
+            const valorConvertido = (valorPesos * currencyData.rate).toFixed(2).replace('.', ',');
+            price.textContent = `${currencyData.symbol} ${valorConvertido}`;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Contador de visitas
+      function updateVisitCount() {
+        if (localStorage) {
+          let visits = localStorage.getItem('visitCount');
+          visits = visits ? parseInt(visits) + 1 : 1;
+          localStorage.setItem('visitCount', visits);
+          document.getElementById('visitCount').innerText = '👁️ Visitas: ' + visits;
+        } else {
+          document.getElementById('visitCount').innerText = 'Tu navegador no soporta almacenamiento local.';
+        }
+      }
+      updateVisitCount();
+
+      // Cargar imagen de perfil en el header
+      const loggedInUser = sessionStorage.getItem('loggedInUser');
+      const btnLogin = document.getElementById('btnLogin');
+      if (loggedInUser) {
+        if (btnLogin) btnLogin.style.display = 'none';
+        const profileImg = document.getElementById('header-profile-pic');
+        const profilePicData = localStorage.getItem(`profile_pic_${loggedInUser}`);
+        profileImg.src = profilePicData || "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmYzMwMCI+CiAgPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4=";
+        profileImg.style.display = 'inline-block';
+      }
+
+      // Set initial currency button text
+      updateCurrencySelector();
+      updatePricesDisplay();
+
+      // Click en logo
+      document.getElementById('logoImage').addEventListener('click', function() {
+        var welcomeMessage = document.getElementById('welcomeMessage');
+        welcomeMessage.classList.add('visible');
+        setTimeout(() => { welcomeMessage.classList.remove('visible'); }, 3000);
+      });
+    });
+
+    function filterComics(category, btn) {
+      // Cambiar estado activo del botón
+      const buttons = document.querySelectorAll('.category-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Filtrar productos
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const categories = card.getAttribute('data-category');
+        if (category === 'all' || categories.includes(category)) {
+          card.style.display = 'block';
+          // Pequeña animación al mostrar
+          setTimeout(() => card.style.opacity = '1', 10);
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

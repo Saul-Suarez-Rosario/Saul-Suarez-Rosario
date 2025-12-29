@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Daily Comics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="imagen/2.png" type="image/png">
+    <style>
+        .profile-wrapper {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #c21515;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #ffcc00;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background-color: #333;
+        }
+
+        .profile-username {
+            color: #ffcc00;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .profile-joined {
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #c21515;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .upload-label:hover {
+            background-color: #ffcc00;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        #profile-upload {
+            display: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons button {
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-shop { background-color: #c21515; }
+        .btn-logout { background-color: #333; border: 1px solid #555; }
+        .btn-shop:hover { background-color: #e03a3a; }
+        .btn-logout:hover { background-color: #555; }
+    </style>
+</head>
+<body>
+    <div class="profile-wrapper">
+        <div class="profile-card">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzg4OCI+CiAgPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4=" alt="Foto de perfil" id="profile-pic" class="profile-picture">
+            <h1 id="profile-username" class="profile-username">Cargando...</h1>
+            <p id="profile-joined" class="profile-joined">Miembro de Daily Comics</p>
+
+            <input type="file" id="profile-upload" accept="image/*">
+            <label for="profile-upload" class="upload-label">📷 Cambiar Foto</label>
+
+            <div class="nav-buttons">
+                <button class="btn-shop" onclick="irATienda()">📚 Ir a la Tienda</button>
+                <button class="btn-logout" onclick="cerrarSesion()">🔒 Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+
+            // Proteger la ruta: si no hay usuario, redirigir al login
+            if (!loggedInUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Mostrar el nombre de usuario
+            document.getElementById('profile-username').textContent = loggedInUser;
+
+            // Cargar la foto de perfil desde localStorage
+            const profilePicData = localStorage.getItem(`profile_pic_${loggedInUser}`);
+            if (profilePicData) {
+                document.getElementById('profile-pic').src = profilePicData;
+            }
+
+            // Manejar la subida de una nueva foto
+            const uploadInput = document.getElementById('profile-upload');
+            uploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        const imageData = e.target.result;
+                        document.getElementById('profile-pic').src = imageData;
+                        localStorage.setItem(`profile_pic_${loggedInUser}`, imageData);
+                        alert('¡Tu foto de perfil ha sido actualizada!');
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        function irATienda() {
+            window.location.href = 'factura.html';
+        }
+
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                sessionStorage.removeItem('loggedInUser');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

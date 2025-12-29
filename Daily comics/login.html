@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Daily Comics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="Icon" href="imagen/2.png" type="image/png">
+    <style>
+      .login-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      #login-form {
+        width: 100%;
+        max-width: 420px;
+        padding: 45px;
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.05) 100%);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 107, 107, 0.15);
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      #login-form h1 {
+        color: #ffffff;
+        margin-bottom: 35px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
+        font-size: 2.3em;
+      }
+
+      .form-group {
+        margin-bottom: 22px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #ffcc00;
+        font-size: 1.05em;
+      }
+
+      input {
+        width: 100%;
+        padding: 13px 16px;
+        margin-bottom: 0;
+        box-sizing: border-box;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.97);
+        color: #333;
+        font-size: 1em;
+        transition: all 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #ff6b6b;
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+        background-color: rgba(255, 255, 255, 1);
+      }
+
+      input::placeholder {
+        color: #999;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 30px;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 18px rgba(255, 107, 107, 0.3);
+      }
+
+      .login-button:hover {
+        background: linear-gradient(135deg, #ff5252 0%, #dd3c51 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+      }
+
+      .login-button:active {
+        transform: translateY(-1px);
+      }
+
+      .signup-link {
+        margin-top: 20px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .signup-link a {
+        color: #ffcc00;
+        font-weight: 600;
+      }
+
+      .signup-link a:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      .logo-login {
+        margin-bottom: 30px;
+      }
+
+      .logo-login img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      @media (max-width: 480px) {
+        #login-form {
+          padding: 30px 20px;
+        }
+
+        #login-form h1 {
+          font-size: 1.8em;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-wrapper">
+      <div id="login-form">
+        <div class="logo-login">
+          <img src="imagen/logo1.png" alt="Daily Comics Logo">
+        </div>
+        
+        <h1>Iniciar Sesión</h1>
+        
+        <form action="generador.html" method="post" onsubmit="return generador()">
+          <div class="form-group">
+            <label for="username">👤 Usuario:</label>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              placeholder="Ingresa tu usuario"
+              required>
+          </div>
+      
+          <div class="form-group">
+            <label for="password">🔒 Contraseña:</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Ingresa tu contraseña"
+              required>
+          </div>
+      
+          <button type="submit" class="login-button">Iniciar Sesión</button>
+        </form>
+
+        <div class="signup-link">
+          <p>¿No tienes cuenta? <a href="registro.html">Crea una aquí</a></p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function generador() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if (!username || !password) {
+          alert('Por favor, ingresa tu usuario y contraseña.');
+          return false;
+        }
+
+        // Obtenemos los usuarios de nuestra "base de datos" en localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Buscamos si el usuario existe y la contraseña coincide
+        const foundUser = users.find(user => user.username === username && user.password === password);
+
+        if (foundUser) {
+          // Si el usuario es válido, guardamos la sesión y lo redirigimos al perfil
+          sessionStorage.setItem('loggedInUser', username);
+          alert(`¡Bienvenido de nuevo, ${username}!`);
+          window.location.href = "perfil.html";
+        } else {
+          // Si no, mostramos un error
+          alert('Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo o regístrate.');
+          return false;
+        }
+
+        return false; // Prevenimos el envío del formulario
+      }
+    </script>
+  </body>
+</html>

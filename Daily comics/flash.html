@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash - Daily Comics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="imagen/flashh.png" type="image/png">
+</head>
+<body>
+    <div class="product-wrapper">
+        <div class="product-header">
+            <div class="product-images">
+                <img src="imagen/flashh.png" alt="Flash Logo" class="logo">
+                <img src="imagen/flash.jpg" alt="Flash Comic" class="main">
+            </div>
+
+            <div class="product-info">
+                <h1>⚡ Flash</h1>
+                
+                <p>
+                    Mi nombre es Barry Allen, después de que un día me cayó un rayo, que fue causado por el acelerador de partículas, 
+                    obtuve mis poderes y ahora me conocen como Flash. Con la velocidad sobrehumana, protejo a mi ciudad de amenazas 
+                    que otros no pueden ni ver.
+                </p>
+
+                <p class="price">RD$260.00</p>
+
+                <div class="form-group">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" value="1" min="1" oninput="updatePrice()" style="width: 80px; padding: 8px; border-radius: 8px; border: 2px solid #c21515; background-color: #f9f9f9; color: #333; font-size: 1.1em; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                </div>
+
+                <div class="form-group">
+                    <label for="pago">💳 Método de pago:</label>
+                    <select id="pago">
+                        <option value="">-- Selecciona un método --</option>
+                        <option value="tarjeta">Tarjeta de débito/crédito</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="crypto">Crypto</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-comprar" onclick="irAlogin4()">🛒 Comprar Ahora</button>
+                    <button class="btn btn-atras" onclick="irAFactura()">← Atrás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_PRICE = 260.00;
+        const CURRENCIES = {
+            'RD$': { rate: 1, symbol: 'RD$' },
+            'USD': { rate: 0.016, symbol: 'US$' },
+            'MXN': { rate: 0.30, symbol: 'MX$' },
+            'PEN': { rate: 0.06, symbol: 'S/' },
+            'BRL': { rate: 0.09, symbol: 'R$' }
+        };
+
+        function updatePrice() {
+            const quantity = document.getElementById('quantity').value;
+            const currency = sessionStorage.getItem('currency') || 'RD$';
+            const currencyData = CURRENCIES[currency] || CURRENCIES['RD$'];
+            
+            const total = (BASE_PRICE * currencyData.rate) * quantity;
+            document.querySelector('.price').textContent = currencyData.symbol + ' ' + total.toFixed(2).replace('.', ',');
+        }
+
+        function irAlogin4() {
+            const pago = document.getElementById('pago').value;
+            if (!pago) {
+                alert('Por favor selecciona un método de pago');
+                return;
+            }
+            const quantity = document.getElementById('quantity').value;
+            const currency = sessionStorage.getItem('currency') || 'RD$';
+            const currencyData = CURRENCIES[currency] || CURRENCIES['RD$'];
+            
+            const total = ((BASE_PRICE * currencyData.rate) * quantity).toFixed(2).replace('.', ',');
+            
+            localStorage.setItem('purchaseTotal', total);
+            localStorage.setItem('purchaseCurrency', currency);
+            if (sessionStorage.getItem('loggedInUser')) {
+                window.location.href = "generador4.html";
+            } else {
+                window.location.href = "login4.html";
+            }
+        }
+
+        function irAFactura() {
+            window.location.href = "factura.html";
+        }
+        document.addEventListener('DOMContentLoaded', updatePrice);
+    </script>
+</body>
+</html>

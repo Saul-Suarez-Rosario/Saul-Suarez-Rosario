@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Reportes</title>
+    <style>
+        #areaDeReporte { width: 100%; height: 300px; margin-bottom: 10px; }
+        button { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <textarea id="areaDeReporte"></textarea>
+    <br>
+    <button onclick="guardarReporte()">Guardar</button>
+    <button onclick="imprimirReporte()">Imprimir</button>
+    <button onclick="generarReporte()">Generar</button>
+    <button onclick="eliminarReporte()">Eliminar</button>
+    
+    <script>
+        function guardarReporte() {
+    const reporte = document.getElementById('areaDeReporte').value;
+    localStorage.setItem('reporte', reporte); 
+    alert('Reporte guardado');
+}
+
+function imprimirReporte() {
+    const contenido = document.getElementById('areaDeReporte').value;
+    let ventana = window.open('', '', 'height=600,width=800');
+    ventana.document.write('<pre>' + contenido + '</pre>');
+    ventana.document.close();
+    ventana.print();
+}
+
+function generarReporte() {
+    const reporteGuardado = localStorage.getItem('reporte');
+    document.getElementById('areaDeReporte').value = reporteGuardado;
+}
+
+function eliminarReporte() {
+    document.getElementById('areaDeReporte').value = ''; 
+    localStorage.removeItem('reporte');
+}
+
+    </script>
+</body>
+</html>

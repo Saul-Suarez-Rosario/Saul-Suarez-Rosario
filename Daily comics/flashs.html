@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="imagen/flashhh.png" type="image/png">
+    <title>Flash Especial - Daily Comics</title>
+</head>
+<body>
+    <div class="product-wrapper">
+        <div class="product-header">
+            <div class="product-images">
+                <img src="imagen/flashhh.png" alt="Flash Logo">
+                <img src="imagen/The Flash.png" alt="Flash">
+            </div>
+            <div class="product-info">
+                <h1>⚡ Flash Especial</h1>
+                <p>Soy Flash, el ser más rápido del planeta tierra. He derrotado a civilizaciones enteras y acabé con el mal dentro de mi país. Soy un aliado de la Liga de la Justicia, siendo uno de los más importantes miembros de este grupo de héroes extraordinarios.</p>
+                <div class="price-tag">RD$390.00</div>
+                <div class="form-group">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" value="1" min="1" oninput="updatePrice()" style="width: 80px; padding: 8px; border-radius: 8px; border: 2px solid #c21515; background-color: #f9f9f9; color: #333; font-size: 1.1em; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                </div>
+                <div class="form-group">
+                    <label for="metodo-pago">Método de pago:</label>
+                    <select id="metodo-pago" required>
+                        <option value="">-- Selecciona un método --</option>
+                        <option value="tarjeta">Tarjeta de débito/crédito</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="crypto">Crypto</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-buy" onclick="validarCompra()">🛒 Comprar Ahora</button>
+                    <button class="btn btn-back" onclick="volverAtras()">← Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const BASE_PRICE = 390.00;
+        const CURRENCIES = {
+            'RD$': { rate: 1, symbol: 'RD$' },
+            'USD': { rate: 0.016, symbol: 'US$' },
+            'MXN': { rate: 0.30, symbol: 'MX$' },
+            'PEN': { rate: 0.06, symbol: 'S/' },
+            'BRL': { rate: 0.09, symbol: 'R$' }
+        };
+
+        function updatePrice() {
+            const quantity = document.getElementById('quantity').value;
+            const currency = sessionStorage.getItem('currency') || 'RD$';
+            const currencyData = CURRENCIES[currency] || CURRENCIES['RD$'];
+            
+            const total = (BASE_PRICE * currencyData.rate) * quantity;
+            document.querySelector('.price-tag').textContent = currencyData.symbol + ' ' + total.toFixed(2).replace('.', ',');
+        }
+
+        function validarCompra() {
+            const metodoPago = document.getElementById('metodo-pago').value;
+            if (!metodoPago) {
+                alert('Por favor selecciona un método de pago');
+                return;
+            }
+            const quantity = document.getElementById('quantity').value;
+            const currency = sessionStorage.getItem('currency') || 'RD$';
+            const currencyData = CURRENCIES[currency] || CURRENCIES['RD$'];
+            
+            const total = ((BASE_PRICE * currencyData.rate) * quantity).toFixed(2).replace('.', ',');
+            
+            localStorage.setItem('purchaseTotal', total);
+            localStorage.setItem('purchaseCurrency', currency);
+            if (sessionStorage.getItem('loggedInUser')) {
+                window.location.href = 'generador5.html';
+            } else {
+                window.location.href = 'login5.html';
+            }
+        }
+        function volverAtras() {
+            window.location.href = 'factura.html';
+        }
+        document.addEventListener('DOMContentLoaded', updatePrice);
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Daily Comics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="Icon" href="imagen/2.png" type="image/png">
+    <style>
+      .login-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      #login-form {
+        width: 100%;
+        max-width: 420px;
+        padding: 45px;
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.05) 100%);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 107, 107, 0.15);
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      #login-form h1 {
+        color: #ffffff;
+        margin-bottom: 35px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
+        font-size: 2.3em;
+      }
+
+      .form-group {
+        margin-bottom: 22px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #ffcc00;
+        font-size: 1.05em;
+      }
+
+      input {
+        width: 100%;
+        padding: 13px 16px;
+        margin-bottom: 0;
+        box-sizing: border-box;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.97);
+        color: #333;
+        font-size: 1em;
+        transition: all 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #ff6b6b;
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+        background-color: rgba(255, 255, 255, 1);
+      }
+
+      input::placeholder {
+        color: #999;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 30px;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 18px rgba(255, 107, 107, 0.3);
+      }
+
+      .login-button:hover {
+        background: linear-gradient(135deg, #ff5252 0%, #dd3c51 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+      }
+
+      .login-button:active {
+        transform: translateY(-1px);
+      }
+
+      .signup-link {
+        margin-top: 20px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .signup-link a {
+        color: #ffcc00;
+        font-weight: 600;
+      }
+
+      .signup-link a:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      .logo-login {
+        margin-bottom: 30px;
+      }
+
+      .logo-login img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      @media (max-width: 480px) {
+        #login-form {
+          padding: 30px 20px;
+        }
+
+        #login-form h1 {
+          font-size: 1.8em;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-wrapper">
+      <div id="login-form">
+        <div class="logo-login">
+          <img src="imagen/logo1.png" alt="Daily Comics Logo">
+        </div>
+        
+        <h1>Crear Cuenta</h1>
+        
+        <form onsubmit="return registrarUsuario()">
+          <div class="form-group">
+            <label for="username">👤 Usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Elige un nombre de usuario" required>
+          </div>
+      
+          <div class="form-group">
+            <label for="password">🔒 Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Crea una contraseña segura" required>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">🔒 Confirmar Contraseña:</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Vuelve a escribir la contraseña" required>
+          </div>
+      
+          <button type="submit" class="login-button">Registrarse</button>
+        </form>
+
+        <div class="signup-link">
+          <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function registrarUsuario() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (username.length < 3) {
+          alert('El usuario debe tener al menos 3 caracteres.');
+          return false;
+        }
+
+        if (password.length < 6) {
+          alert('La contraseña debe tener al menos 6 caracteres.');
+          return false;
+        }
+
+        if (password !== confirmPassword) {
+          alert('Las contraseñas no coinciden.');
+          return false;
+        }
+        
+        // Simulamos una base de datos con localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Verificamos si el usuario ya existe
+        if (users.some(user => user.username === username)) {
+          alert('Este nombre de usuario ya está en uso. Por favor, elige otro.');
+          return false;
+        }
+
+        // Agregamos el nuevo usuario
+        users.push({ username: username, password: password });
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        alert(`¡Registro exitoso para ${username}!\nAhora serás redirigido para que inicies sesión.`);
+        window.location.href = "login.html";
+        return false; // Previene el envío real del formulario
+      }
+    </script>
+  </body>
+</html>

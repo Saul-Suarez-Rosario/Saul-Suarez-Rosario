@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="imagen/Batman Dark Knight Logo.png" type="image/png">
+    <title>Resumen de Compra - Batman Dark Knight</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .order-wrapper {max-width: 900px; margin: 30px auto; padding: 20px;}
+        .order-container {background: rgba(0, 0, 0, 0.7); padding: 40px; border-radius: 10px; border: 3px solid #c21515; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);}
+        .order-header {display: flex; align-items: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;}
+        .order-header img {height: 150px; width: auto; border-radius: 10px; margin: 0;}
+        .order-header h1 {color: #ffcc00; margin: 0;}
+        .order-info {background: rgba(194, 21, 21, 0.2); padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffcc00;}
+        .order-info h3 {color: #ffcc00; margin-top: 0;}
+        .form-group {margin-bottom: 15px;}
+        .form-group label {display: block; color: #ffcc00; font-weight: 600; margin-bottom: 8px;}
+        .form-group input {width: 100%; padding: 10px; border: 2px solid #c21515; border-radius: 5px; background: rgba(255, 255, 255, 0.95); color: #333; box-sizing: border-box;}
+        .button-group {display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap;}
+        .btn {flex: 1; min-width: 150px; padding: 12px 20px; font-size: 1em; cursor: pointer; border: none; border-radius: 5px; font-weight: 700; transition: all 0.3s ease;}
+        .btn-success {background-color: #c21515; color: white;}
+        .btn-success:hover {background-color: #ffcc00; color: #000;}
+        .btn-info {background-color: #008CBA; color: white;}
+        .btn-info:hover {background-color: #007B9E;}
+        .btn-danger {background-color: #777; color: white;}
+        .btn-danger:hover {background-color: #555;}
+        .price-summary {background: rgba(194, 21, 21, 0.3); padding: 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #c21515;}
+        .price-summary h3 {color: #ffcc00; text-align: right; font-size: 1.8em; margin: 0;}
+        .back-link {margin-top: 20px; text-align: center;}
+        .back-link a {color: #ffcc00; text-decoration: none; font-weight: 600;}
+        .back-link a:hover {text-decoration: underline;}
+        @media (max-width: 768px) {.order-header {flex-direction: column; gap: 20px;} .button-group {flex-direction: column;} .btn {min-width: 100%;}}
+        @media print { body { background-color: #fff; } .order-container { background: #fff; color: #000; border: none; } .button-group, .back-link { display: none; } .order-header h1, .order-info h3, .price-summary h3, .form-group label { color: #000; } .order-info, .price-summary { background: #f0f0f0; } .form-group input { border: 1px solid #ccc; background: #fff; color: #000; } p, .order-header p { color: #000 !important; } }
+        
+        /* Estilos para PDF generado */
+        .pdf-mode { background-color: #ffffff !important; color: #000000 !important; border: 2px solid #333 !important; box-shadow: none !important; padding: 20px !important; }
+        .pdf-mode .button-group, .pdf-mode .back-link { display: none !important; }
+        .pdf-mode .order-header h1 { color: #c21515 !important; }
+        .pdf-mode .order-info h3, .pdf-mode .price-summary h3, .pdf-mode .form-group label { color: #333 !important; }
+        .pdf-mode .order-info, .pdf-mode .price-summary { background-color: #f4f4f4 !important; border: 1px solid #ddd !important; }
+        .pdf-mode .form-group input { background-color: #fff !important; color: #000 !important; border: 1px solid #ccc !important; }
+        .pdf-mode p { color: #555 !important; }
+    </style>
+</head>
+<body>
+    <div class="order-wrapper">
+        <div class="order-container">
+            <div class="order-header">
+                <img src="imagen/Batman Dark Knight Logo.png" alt="Batman Dark Knight">
+                <div>
+                    <h1>🦇 Batman: Dark Knight</h1>
+                    <p style="color: #fff; margin: 10px 0;">Cómic exclusivo de Daily Comics</p>
+                </div>
+            </div>
+            <div class="order-info">
+                <h3>📋 Información de la Compra</h3>
+                <div class="form-group"><label for="nombre">Nombre Completo:</label><input type="text" id="nombre" placeholder="Juan Pérez" required></div>
+                <div class="form-group"><label for="correo">Correo Electrónico:</label><input type="email" id="correo" placeholder="ejemplo@gmail.com" required></div>
+                <div class="form-group"><label for="telefono">Teléfono:</label><input type="tel" id="telefono" placeholder="(829) 000-0000" required></div>
+                <div class="form-group"><label for="direccion">Dirección:</label><input type="text" id="direccion" placeholder="Calle Principal 123" required></div>
+                <div class="form-group"><label for="cedula">Cédula/ID:</label><input type="text" id="cedula" placeholder="001-0000000-0" required></div>
+            </div>
+            <div class="price-summary"><h3>Total: RD$420.00</h3></div>
+            <div class="button-group">
+                <button class="btn btn-success" onclick="generarReporte()">✓ Finalizar Compra</button>
+                <button class="btn btn-info" onclick="imprimir()">🖨️ Imprimir</button>
+                <button class="btn btn-danger" onclick="descargarPDF(event)">📥 Descargar PDF</button>
+            </div>
+            <div class="back-link"><a href="factura.html">← Volver al catálogo</a></div>
+        </div>
+    </div>
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const total = localStorage.getItem('purchaseTotal');
+            const currency = localStorage.getItem('purchaseCurrency') || 'RD$';
+            
+            const CURRENCY_SYMBOLS = {
+                'RD$': 'RD$',
+                'USD': 'US$',
+                'MXN': 'MX$',
+                'PEN': 'S/',
+                'BRL': 'R$'
+            };
+
+            if (total) {
+                const symbol = CURRENCY_SYMBOLS[currency] || 'RD$';
+                document.querySelector('.price-summary h3').textContent = 'Total: ' + symbol + ' ' + total;
+            }
+        });
+        function generarReporte() {
+            const nombre = document.getElementById('nombre').value;
+            const correo = document.getElementById('correo').value;
+            const telefono = document.getElementById('telefono').value;
+            const direccion = document.getElementById('direccion').value;
+            const cedula = document.getElementById('cedula').value;
+            if (!nombre || !correo || !telefono || !direccion || !cedula) {alert('Por favor completa todos los campos'); return;}
+            alert(`¡Compra exitosa!\n\nNombre: ${nombre}\nCorreo: ${correo}\nTeléfono: ${telefono}\nDirección: ${direccion}\nCédula: ${cedula}\n\n¡Gracias por tu compra!`);
+        }
+        function imprimir() {window.print();}
+        function descargarPDF(event) {
+            if (typeof html2pdf === 'undefined') {
+                alert('No se pudo cargar la librería para generar el PDF. Por favor, revisa tu conexión a internet y vuelve a intentarlo.');
+                return;
+            }
+
+            const element = document.querySelector('.order-container');
+            const downloadButton = event.currentTarget;
+
+            downloadButton.disabled = true;
+            downloadButton.innerHTML = '📥 Generando...';
+
+            element.classList.add('pdf-mode');
+
+            const opt = {
+                margin: 0.5,
+                filename: 'resumen_compra_batman_dark_knight.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, scrollY: 0 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: 'avoid-all' }
+            };
+            html2pdf().from(element).set(opt).save().then(() => {
+                element.classList.remove('pdf-mode');
+                downloadButton.disabled = false;
+                downloadButton.innerHTML = '📥 Descargar PDF';
+            }).catch(err => {
+                console.error('Error:', err);
+                alert('Hubo un error al generar el PDF. Por favor, inténtalo de nuevo.');
+                element.classList.remove('pdf-mode');
+                downloadButton.disabled = false;
+                downloadButton.innerHTML = '📥 Descargar PDF';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Daily Comics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="imagen/logo4.png" type="image/png">
+    <style>
+        .about-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.05) 100%);
+            border-radius: 15px;
+            border-left: 5px solid #ffcc00;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .logo-container img {
+            max-width: 220px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.08) 100%);
+            padding: 28px;
+            border-radius: 12px;
+            margin: 35px 0;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info h3 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 14px 0;
+            font-size: 1.1em;
+            color: #e0e0e0;
+        }
+
+        .contact-item strong {
+            color: #ffcc00;
+            margin-right: 12px;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .mission-vision > div {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.12) 0%, rgba(78, 205, 196, 0.06) 100%);
+            padding: 28px;
+            border-radius: 12px;
+            border-left: 5px solid #ffcc00;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .mission-vision > div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(255, 107, 107, 0.2);
+        }
+
+        .mission-vision h3 {
+            color: #ffcc00;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .mission-vision p {
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .mission-vision {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .about-container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .logo-container img {
+                max-width: 180px;
+            }
+
+            .contact-info {
+                padding: 20px;
+            }
+
+            .mission-vision > div {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <div class="logo-container">
+            <img src="imagen/logo4.png" alt="Daily Comics Logo">
+        </div>
+
+        <h1>Daily Comics</h1>
+        <h2>¿Quiénes somos?</h2>
+        
+        <p>
+            Bienvenidos a <strong style="color: #ffcc00;">Daily Comics</strong>, su parada única para una meticulosa selección de cómics que
+            abarcan desde los imprescindibles clásicos hasta las joyas indies más recientes. Nos especializamos
+            en ofrecer historias que cautivan, desde aventuras épicas de superhéroes hasta narrativas profundas
+            y personales que reflejan el mundo real.
+        </p>
+
+        <p style="font-style: italic; color: #ffcc00; margin: 20px 0;">
+            En Daily Comics, creemos que hay un cómic para cada persona, y nos dedicamos a ayudarte a encontrar el tuyo.
+        </p>
+
+        <div class="mission-vision">
+            <div>
+                <h3>🎯 Nuestra Misión</h3>
+                <p>Brindar a los amantes de los cómics una plataforma accesible, organizada y confiable donde puedan descubrir, explorar y adquirir sus titulos favoritos. Nos comprometemos a ofrecer una experiencia de compra intuitiva, un catátolo variado y contenido de calidad que fomente el disfrute y la cultura del cómic en todas sus formas.</p>
+            </div>
+            <div>
+                <h3>👁️ Nuestra Visión</h3>
+                <p>Convertirnos en la plataforma líder de referencia para la compra y exploración de cómics en línea, reconocida por su variedad, innovación y excelencia en la experiencia del usuario Aspiramos a construir una comunidad apasionada que encuentre en nuestro sitio un espacion confiable, moderno y enriquecedor para disfrutar del universo del cómic.</p>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h3>📞 Contacto</h3>
+            <div class="contact-item">
+                <strong>Teléfono:</strong>
+                <span>(829) 860-7207</span>
+            </div>
+            <div class="contact-item">
+                <strong>Dirección:</strong>
+                <span>Ave. Simón Bolívar, Santo Domingo</span>
+            </div>
+            <div class="contact-item">
+                <strong>Email:</strong>
+                <span><a href="mailto:dailycomic@gmail.com">dailycomic@gmail.com</a></span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" onclick="volverAtras()">← Volver</button>
+            <button type="button" onclick="irInicio()" class="secondary-button">🏠 Inicio</button>
+        </div>
+    </div>
+    
+    <script>
+        function volverAtras() {
+            window.history.back();
+        }
+        
+        function irInicio() {
+            window.location.href = "factura.html";
+        }
+    </script>
+
+</body>
+</html>
