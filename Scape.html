@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scape Room</title>
+
+    <!-- Íconos y CSS general (mismo del portafolio) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="CSS/Scape.css">
+
+    <!-- Logo -->
+    <link rel="icon" href="Img/Scape Room.png" type="img/png">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="contenedor-header">
+        <header>
+            <div class="logo">
+                 <img src="Img/Logo.png" alt="Logo Personal">
+            </div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="Portafolio.html">VOLVER</a></li>
+                    <li><a href="#inicio">INICIO</a></li>
+                    <li><a href="#informacion">INFORMACIÓN</a></li>
+                    <li><a href="#servicios">SERVICIOS</a></li>
+                    <li> <a href="#juegos">JUEGOS DESTACADOS</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle" id="theme-toggle" title="Alternar tema">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </div>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+    </div>
+
+    <!-- SECCIÓN PRINCIPAL -->
+    <section id="inicio" class="inicio">
+        <div class="contenido-banner">
+            <div class="contenedor-img">
+                <img src="Img/Scape Room.png" alt="Nutri Mart Logo">
+            </div>
+
+            <h1>Scape Room</h1>
+            <h2>Feria Tecnológica</h2>
+            <h2>Web VideoGame (2025-11-17)</h2>
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN -->
+    <section id="informacion" class="sobremi">
+        <div class="contenido-seccion">
+            <h2>Información</h2>
+            <p>
+                <span>Scape Room:</span> Tuve el honor de ser uno de los programadores de este maravilloso proyecto para la feria tecnológica 2025. Surgió como una oportunidad para aplicar mis conocimientos en creación de experiencias interactivas, mientras ofrecía una actividad entretenida y educativa para los participantes.
+            </p>
+
+            <div class="fila">
+                <div class="col">
+                    <h3>Misión</h3>
+                    <p>Ofrecer una experiencia educativa divertida y dinámica donde los participantes desarrollen pensamientos críticos y trabajen la creatividad a través de retos interactivos.</p>
+                    <h3>Visión</h3>
+                    <p>Ser un espacio líder en experiencias educativas innovadoras, donde el aprendizaje se viva de forma interactiva, divertida y memorable para todas las edades.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="skills">
+        <div class="contenido-seccion">
+            <h2>Servicios</h2>
+
+            <div class="fila">
+
+                <div class="col">
+                    <h3>¿Qué ofrece?</h3>
+
+                    <div class="skill">
+                        <span>Juegos Educativos Interactivos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span>Catálogos de Videojuegos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 90%;"><span>90%</span></div>
+                        </div>
+                    </div>
+
+                     <div class="skill">
+                        <span>Soporte técnico y atención al jugador</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 95%;"><span>95%</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col">
+                    <h3>Ventajas</h3>
+
+                    <div class="skill">
+                        <span>Aprendizaje Divertido</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 90%;"><span>90%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span>Contenido Seguro y Educativo</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                     <div class="skill">
+                        <span>Comunidad activa</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 93%;"><span>93%</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- JUEGOS DESTACADOS -->
+   <section id="juegos" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>Juegos Destacados</h2>
+
+            <div class="galeria">
+
+              <div class="proyecto">
+    <img src="Img/scape/Cars.png" alt="Juego 1">
+    <div class="overlay">
+        <h3>Juego N.1</h3>
+        <a href="Game Proyecto/index.html" class="btn">Interactuar</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Adivina la Palabra/Adivina.png" alt="Juego 2">
+    <div class="overlay">
+        <h3>Juego N.2</h3>
+        <a href="Adivina la Palabra/Adivina.html" class="btn">Interactuar</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/scape/Matematicas Divertidas.png" alt="Matemáticas Divertidas">
+    <div class="overlay">
+        <h3>Juego N.3</h3>
+        <a href="Segundo Matématica/index.html" class="btn">Interactuar</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/scape/Tetris.png" alt="Juego 4">
+    <div class="overlay">
+        <h3>Juego N.4</h3>
+        <a href="Juego de Tetri/Tetri.html" class="btn">Interactuar</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Pacman HTML/img/PacMan.jpg" alt="Juego 5">
+    <div class="overlay">
+        <h3>Juego N.5</h3>
+        <a href="Pacman HTML/index.html" class="btn">Interactuar</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Arkanoid/img/Arkanoid 1.jpg" alt="Juego 6">
+    <div class="overlay">
+        <h3>Juego N.6</h3>
+        <a href="Arkanoid/index.html" class="btn">Interactuar</a>
+    </div>
+</div>
+    </section>
+              
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="#inicio" class="arriba">
+            <i class="fa-solid fa-angles-up"></i>
+        </a>
+        <div class="redes">
+             <a href="https://www.linkedin.com/in/saul-suarez-rosario-b97aba389/" target="_blank">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/saulsuarezrosario25022008-lab" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://www.instagram.com/saulsuarez2502/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+     <a href="mailto:Saulsuarezrosario25022008@gmail.com" target="_blank">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+        </div>
+    </footer>
+
+    <footer>© 2025 Saul Suarez Rosario. Todos los derechos reservados.
+
+    </footer>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

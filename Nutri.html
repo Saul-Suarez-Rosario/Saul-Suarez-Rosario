@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Mart</title>
+
+    <!-- Íconos y CSS general (mismo del portafolio) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="CSS/Nutri.css">
+
+    <!-- Logo -->
+    <link rel="icon" href="Img/Nutri Mart.png" type="img/png">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="contenedor-header">
+        <header>
+            <div class="logo">
+                 <img src="Img/Logo.png" alt="Logo Personal">
+            </div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="Portafolio.html">VOLVER</a></li>
+                    <li><a href="#inicio">INICIO</a></li>
+                    <li><a href="#informacion">INFORMACIÓN</a></li>
+                    <li><a href="#servicios">SERVICIOS</a></li>
+                    <li><a href="#categorias">CATEGORÍAS</a></li>
+                    <li> <a href="#pruebas">PRUEBAS</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle" id="theme-toggle" title="Alternar tema">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </div>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+    </div>
+
+    <!-- SECCIÓN PRINCIPAL -->
+    <section id="inicio" class="inicio">
+        <div class="contenido-banner">
+            <div class="contenedor-img">
+                <img src="Img/Nutri Mart.png" alt="Nutri Mart Logo">
+            </div>
+
+            <h1>Nutri Mart</h1>
+            <h2>Supermercado Online</h2>
+            <h2>Página web (2025-11-18)</h2>
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN -->
+    <section id="informacion" class="sobremi">
+        <div class="contenido-seccion">
+            <h2>Información</h2>
+            <p>
+                <span>Nutri Mart:</span> Este proyecto nació con la idea de crear un sitio web para Nutri Market, un supermercado especializado en productos saludables y frescos. La meta fue desarrollar una plataforma visualmente atractiva y fácil de usar, donde los clientes pudieran descubrir los productos, ver ofertas y disfrutar de una experiencia de compra más ordenada. Me encargué de la parte de programación, así como de la estructura general del sitio.
+            </p>
+
+            <div class="fila">
+                <div class="col">
+                    <h3>Misión</h3>
+                    <p>Brindar una experiencia de compra online accesible y confiable, ofreciendo productos frescos, naturales y saludables que promuevan el bienestar y un estilo de vida sano.</p>
+                    <h3>Visión</h3>
+                    <p>Convertirnos en el supermercado online líder en productos frescos y saludables, reconocido por la calidad, la innovación y la confianza de nuestros clientes, promoviendo un estilo de vida más natural y sostenible.</p>
+                </div>
+
+                <div class="col">
+                    <h3>Valores</h3>
+                    <ul>
+                        <li><strong>Calidad</strong></li>
+                        <li><strong>Transparencia</strong></li>
+                        <li><strong>Responsabilidad</strong></li>
+                        <li><strong>Innovación</strong></li>
+                        <li><strong>Compromiso</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="skills">
+        <div class="contenido-seccion">
+            <h2>Servicios</h2>
+
+            <div class="fila">
+
+                <div class="col">
+                    <h3>¿Qué ofrecemos?</h3>
+
+                    <div class="skill">
+                        <span>Atención al cliente</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 99%;"><span>99%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span>Métodos de pago variados</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 95%;"><span>95%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Productos frescos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 90%;"><span>90%</span></div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col">
+                    <h3>Ventajas</h3>
+
+                    <div class="skill">
+                        <span>Compra segura</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Catálogo digital de productos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 95%;"><span>95%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Ofertas y promociones exclusivas</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS / GALERÍA -->
+    <section id="categorias" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>Categorías</h2>
+
+            <div class="galeria">
+
+                <div class="proyecto">
+                    <img src="Img/nutri/Bebidas.png" alt="Bebidas 1">
+                    <div class="overlay">
+                        <h3>Bebidas</h3>
+                        <p>Gran variedad de jugos, refrescos, aguas saborizadas y lácteos para hidratarte y disfrutar en cualquier momento del día.</p>
+                    </div>
+                </div>
+
+                <div class="proyecto">
+                    <img src="Img/nutri/Frutas.png" alt="Frutas 2">
+                    <div class="overlay">
+                        <h3>Frutas</h3>
+                        <p>Amplia selección de frutas frescas, coloridas y nutritivas, perfectas para una alimentación saludable y deliciosa.</p>
+                    </div>
+                </div>
+
+                <div class="proyecto">
+                    <img src="Img/nutri/Verduras.png" alt="Vegetales 3">
+                    <div class="overlay">
+                        <h3>Vegetales</h3>
+                        <p>Variedad de vegetales frescos, ricos en nutrientes esenciales, ideales para una dieta balanceada y natural.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRUEBA -->
+   <section id="pruebas" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>Pruebas</h2>
+
+            <div class="galeria">
+
+              <div class="proyecto">
+    <img src="Img/nutri/Boseto.png" alt="Boceto">
+    <div class="overlay">
+        <h3>Uno de los primeros bocetos</h3>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/nutri/Codigo.png" alt="Códigos">
+    <div class="overlay">
+        <h3>Primera fase de los códigos</h3>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/nutri/Metodos de pago.png" alt="Métodos de pago">
+    <div class="overlay">
+        <h3>Métodos de pago</h3>
+    </div>
+</div>
+
+    </section>
+              
+
+    <!-- FOOTER -->
+       <footer>
+        <a href="#inicio" class="arriba">
+            <i class="fa-solid fa-angles-up"></i>
+        </a>
+        <div class="redes">
+             <a href="https://www.linkedin.com/in/saul-suarez-rosario-b97aba389/" target="_blank">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/saulsuarezrosario25022008-lab" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://www.instagram.com/saulsuarez2502/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+     <a href="mailto:Saulsuarezrosario25022008@gmail.com" target="_blank">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+        </div>
+    </footer>
+
+    <footer>© 2025 Saul Suarez Rosario. Todos los derechos reservados.
+
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
