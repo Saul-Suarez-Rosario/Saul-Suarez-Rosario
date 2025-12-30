@@ -49,7 +49,7 @@
 
             <nav id="nav">
                 <ul>
-                    <li><a href="Portafolio.html">VOLVER</a></li>
+                    <li><a href="index.html">VOLVER</a></li>
                     <li><a href="#inicio">INICIO</a></li>
                     <li><a href="#informacion">INFORMACIÓN</a></li>
                     <li><a href="#servicios">SERVICIOS</a></li>
@@ -271,8 +271,8 @@
     </footer>
 
     <!-- Audio de fondo -->
-    <audio id="musica-fondo" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mp3">
+    <audio id="musica-fondo" loop autoplay>
+        <source src="Musica Suave.mp3" type="audio/mp3">
     </audio>
 
     <!-- Botón de control de música -->
@@ -280,6 +280,75 @@
         <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
     </div>
 
+    <script>
+        // Lógica para música de fondo (Autoplay y control)
+        const audio = document.getElementById("musica-fondo");
+        const musicIcon = document.getElementById("music-icon");
+        const musicToggle = document.getElementById("music-toggle");
+
+        // Recuperar posición y estado del almacenamiento local
+        const savedTime = localStorage.getItem('bgMusicTime');
+        const savedState = localStorage.getItem('bgMusicPlaying');
+
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+
+        audio.volume = 0.1; // Volumen suave
+
+        function updateIcon() {
+            if (audio.paused) {
+                musicIcon.classList.remove("fa-volume-high");
+                musicIcon.classList.add("fa-volume-xmark");
+            } else {
+                musicIcon.classList.remove("fa-volume-xmark");
+                musicIcon.classList.add("fa-volume-high");
+            }
+        }
+
+        function saveAudioState() {
+            localStorage.setItem('bgMusicTime', audio.currentTime);
+            localStorage.setItem('bgMusicPlaying', !audio.paused);
+        }
+
+        window.addEventListener('beforeunload', saveAudioState);
+        setInterval(saveAudioState, 1000);
+
+        // Función para activar audio en la primera interacción si el autoplay falla
+        const playOnInteraction = () => {
+            audio.play().then(() => {
+                updateIcon();
+            });
+            document.removeEventListener('click', playOnInteraction);
+        };
+
+        // Lógica de reproducción inicial
+        const shouldPlay = savedState === 'true' || savedState === null;
+
+        if (shouldPlay) {
+            audio.play().then(() => {
+                updateIcon();
+            }).catch(error => {
+                document.addEventListener('click', playOnInteraction);
+            });
+        } else {
+            audio.pause();
+            updateIcon();
+        }
+
+        // Listener para el botón de música
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.removeEventListener('click', playOnInteraction); // Cancelar autoplay forzado si el usuario interactúa manualmente
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            updateIcon();
+            saveAudioState();
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
