@@ -1,6 +1,5 @@
 {
-  "rewrites": [
-    { "source": "/Portafolio.html", "destination": "/Portafolio.html" }
-
+  "routes": [
+    { "src": "/", "dest": "/Portafolio.html" }
   ]
 }
