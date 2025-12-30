@@ -1,5 +1,8 @@
 {
-  "routes": [
-    { "src": "/", "dest": "Portafolio.html" }
-  ]
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/Portafolio.html"
+        }
+    ]
 }
