@@ -79,6 +79,201 @@
         .reconocimiento-item {
             cursor: pointer;
         }
+        .interes {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .interes:hover {
+            transform: scale(1.05);
+        }
+        /* Estilos para el botón de música */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #1CB698;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .music-toggle:hover {
+            transform: scale(1.1);
+            background-color: #159b80;
+        }
+        /* Estilos para habilidades futuras (Click en foto) */
+        .contenedor-img {
+            position: relative;
+            cursor: pointer;
+            overflow: visible !important; /* Permitir que los elementos salgan del círculo */
+            transition: transform 0.3s;
+        }
+        .contenedor-img:active {
+            transform: scale(0.95);
+        }
+        .future-skill {
+            position: absolute;
+            background-color: #252A2E;
+            color: #1CB698;
+            padding: 8px 12px;
+            border: 1px solid #1CB698;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            pointer-events: none;
+            z-index: 10;
+            white-space: nowrap;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .contenedor-img.active .future-skill {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto; /* Habilitar clic en las habilidades */
+        }
+        /* Posiciones y Líneas conectoras */
+        .skill-1 { top: 10%; left: -110px; } /* Python */
+        .skill-2 { top: 10%; right: -110px; } /* Ciberseguridad */
+        .skill-3 { bottom: 10%; left: -110px; } /* Mecatrónica */
+        .skill-4 { bottom: 10%; right: -110px; } /* SQL */
+
+        .future-skill::before {
+            content: ''; position: absolute; top: 50%; width: 25px; height: 2px; background: #1CB698; z-index: -1;
+        }
+        /* Orientación de las líneas hacia la foto */
+        .skill-1::before, .skill-3::before { left: 100%; }
+        .skill-2::before, .skill-4::before { right: 100%; }
+
+        /* Etiqueta central al hacer clic */
+        .future-learning-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(37, 42, 46, 0.9);
+            color: #1CB698;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 5;
+            line-height: 1.4;
+        }
+        .contenedor-img.active .future-learning-label {
+            opacity: 1;
+        }
+        .future-skill i {
+            margin-right: 8px;
+        }
+
+        /* Estilos para el motivo de aprendizaje */
+        .skill-reason {
+            position: absolute;
+            background-color: #1CB698;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            width: max-content;
+            max-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 20;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            white-space: normal; /* Asegura que el texto baje de línea si es largo */
+        }
+        .future-skill.active-skill .skill-reason {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Posicionamiento de los motivos y líneas */
+        .skill-1 .skill-reason { top: 50%; right: 125%; transform: translateY(-50%); }
+        .skill-2 .skill-reason { top: 50%; left: 125%; transform: translateY(-50%); }
+        .skill-3 .skill-reason { top: 50%; right: 125%; transform: translateY(-50%); }
+        .skill-4 .skill-reason { top: 50%; left: 125%; transform: translateY(-50%); }
+
+        .skill-reason::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 2px; background: #1CB698; margin-top: -1px;
+        }
+        .skill-1 .skill-reason::after, .skill-3 .skill-reason::after { left: 100%; }
+        .skill-2 .skill-reason::after, .skill-4 .skill-reason::after { right: 100%; }
+
+        /* --- RESPONSIVE: Evitar que se salgan de la pantalla --- */
+        @media (max-width: 1024px) {
+            /* Acercar las etiquetas a la foto */
+            .skill-1 { left: 0; }
+            .skill-2 { right: 0; }
+            .skill-3 { left: 0; }
+            .skill-4 { right: 0; }
+
+            /* Reposicionar los cuadros de texto (motivos) verticalmente */
+            
+            /* Skill 1 (Izq Arriba) -> Motivo ABAJO, alineado a la izquierda (hacia adentro) */
+            .skill-1 .skill-reason {
+                top: 100%; bottom: auto; left: 0; right: auto;
+                transform: translateY(10px);
+            }
+            /* Skill 2 (Der Arriba) -> Motivo ABAJO, alineado a la derecha (hacia adentro) */
+            .skill-2 .skill-reason {
+                top: 100%; bottom: auto; left: auto; right: 0;
+                transform: translateY(10px);
+            }
+
+            /* Skill 3 (Izq Abajo) -> Motivo ARRIBA, alineado a la izquierda */
+            .skill-3 .skill-reason {
+                bottom: 100%; top: auto; left: 0; right: auto;
+                transform: translateY(-10px);
+            }
+            /* Skill 4 (Der Abajo) -> Motivo ARRIBA, alineado a la derecha */
+            .skill-4 .skill-reason {
+                bottom: 100%; top: auto; left: auto; right: 0;
+                transform: translateY(-10px);
+            }
+
+            /* Ajustar flechas conectoras */
+            .skill-1 .skill-reason::after, .skill-3 .skill-reason::after {
+                left: 20px; right: auto; margin-left: 0;
+            }
+            .skill-2 .skill-reason::after, .skill-4 .skill-reason::after {
+                right: 20px; left: auto; margin-left: 0;
+            }
+            .skill-1 .skill-reason::after, .skill-2 .skill-reason::after {
+                top: -10px; width: 2px; height: 10px;
+            }
+            .skill-3 .skill-reason::after, .skill-4 .skill-reason::after {
+                bottom: -10px; top: auto; width: 2px; height: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Ajustes para móviles pequeños */
+            .skill-1 { left: 0; top: 0; }
+            .skill-2 { right: 0; top: 0; }
+            .skill-3 { left: 0; bottom: 0; }
+            .skill-4 { right: 0; bottom: 0; }
+            .future-skill::before { display: none; } /* Ocultar línea lateral en móvil */
+            .skill-reason { width: 130px; font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -107,8 +302,27 @@
 
     <section id="inicio" class="inicio">
         <div class="contenido-banner">
-            <div class="contenedor-img">
+            <div class="contenedor-img" id="foto-perfil">
                 <img src="Img/SaulSuarez.jpg" alt="Foto de Saul Suarez">
+                <div class="future-learning-label">
+                    Lo que quiero<br>aprender
+                </div>
+                <div class="future-skill skill-1">
+                    <i class="fa-brands fa-python"></i> Python
+                    <div class="skill-reason">Para desarrollar soluciones de IA y automatización.</div>
+                </div>
+                <div class="future-skill skill-2">
+                    <i class="fa-solid fa-shield-halved"></i> Ciberseguridad
+                    <div class="skill-reason">Para proteger sistemas y datos en el entorno digital.</div>
+                </div>
+                <div class="future-skill skill-3">
+                    <i class="fa-solid fa-robot"></i> Mecatrónica
+                    <div class="skill-reason">Para ejecutar fases de innovación tecnológica.</div>
+                </div>
+                <div class="future-skill skill-4">
+                    <i class="fa-solid fa-database"></i> SQL
+                    <div class="skill-reason">Para gestionar y analizar grandes volúmenes de datos.</div>
+                </div>
             </div>
             <h1>Saul Suarez</h1>
             <h2>Técnico en Soporte de Redes, Sistemas y Administración de Aplicaciones Informáticas</h2>
@@ -131,9 +345,15 @@
     <section id="sobremi" class="sobremi">
         <div class="contenido-seccion">
             <h2>Sobre Mí</h2>
-            <p><span>Hola, soy Saul Suarez.</span> He culminado mis estudios de bachiller técnico en informática y actualmente me enfoco en seguir fortaleciendo mis conocimientos en esta área. Poseo un gran interés por el mundo tecnológico y, a futuro, tengo la firme ambición de formarme e integrarme en el ámbito de la mecatrónica para desarrollar proyectos innovadores.
-
-Asimismo, motivado por la importancia de la privacidad en la era digital, tengo un especial interés en profundizar en el campo de la ciberseguridad. Me caracterizo por ser una persona puntual, responsable y plenamente comprometida con cada proyecto y meta de aprendizaje que asumo.
+            <p><span>Hola, soy Saul Suarez.</span> He culminado mis estudios de bachiller técnico en 
+                informática y actualmente me enfoco en seguir fortaleciendo mis conocimientos en esta 
+                área. Poseo un gran interés por el mundo tecnológico y me gustaría adquirir, aplicar 
+                y demostrar mis conocimientos en una empresa que me permita crecer profesionalmente y aportar 
+                valor. A futuro, tengo la firme ambición de formarme e integrarme en el ámbito de la 
+                mecatrónica para desarrollar proyectos innovadores. Asimismo, motivado por la importancia
+                 de la privacidad en la era digital, tengo un especial interés en profundizar en el campo 
+                 de la ciberseguridad. Me caracterizo por ser una persona puntual, responsable y plenamente
+                  comprometida con cada proyecto y meta de aprendizaje que asumo.
             <div class="fila">
                 <div class="col">
                     <h3>Datos Personales</h3>
@@ -160,19 +380,19 @@ Asimismo, motivado por la importancia de la privacidad en la era digital, tengo 
                 <div class="col">
                     <h3>Intereses</h3>
                     <div class="contenedor-intereses">
-                        <div class="interes">
+                        <div class="interes" data-title="JUEGOS" data-desc="Los videojuegos despiertan mi curiosidad por la lógica y la narrativa. Me inspiran a entender cómo se construyen experiencias inmersivas y a desarrollar mi creatividad.">
                             <i class="fa-solid fa-gamepad"></i>
                             <span>JUEGOS</span>
                         </div>
-                        <div class="interes">
+                        <div class="interes" data-title="MÚSICA" data-desc="La música es mi compañera ideal. Me ayuda a concentrarme, relajarme y encontrar el ritmo adecuado para resolver problemas complejos.">
                             <i class="fa-solid fa-headphones"></i>
                             <span>MÚSICA</span>
                         </div>
-                        <div class="interes">
+                        <div class="interes" data-title="TECNOLOGIA" data-desc="La tecnología es mi pasión y mi futuro. Me motiva aprender constantemente sobre nuevas herramientas y avances que transforman nuestro mundo.">
                             <i class="fa-solid fa-computer"></i>
                             <span>TECNOLOGIA</span>
                         </div>
-                        <div class="interes">
+                        <div class="interes" data-title="DEPORTE" data-desc="El deporte me mantiene activo y me enseña valores esenciales como la disciplina, la constancia y el trabajo en equipo.">
                             <i class="fa-solid fa-baseball-ball"></i>
                             <span>DEPORTE</span>
                         </div>
@@ -478,6 +698,28 @@ Asimismo, motivado por la importancia de la privacidad en la era digital, tengo 
         </div>
     </div>
 
+    <!-- Modal para Intereses -->
+    <div id="modal-intereses" class="modal">
+        <div class="modal-content">
+            <span class="close-modal-intereses close-modal">&times;</span>
+            <div class="texto-modal">
+                <i id="icono-interes-modal" style="font-size: 4rem; color: #1CB698; margin-bottom: 20px;"></i>
+                <h3 id="titulo-interes-modal" style="margin-bottom: 15px; color: #fff;"></h3>
+                <p id="desc-interes-modal" style="font-size: 1.1rem; line-height: 1.6;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio de fondo -->
+    <audio id="musica-fondo" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Botón de control de música -->
+    <div class="music-toggle" id="music-toggle" title="Activar/Desactivar Música">
+        <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
+    </div>
+
     <script>
         // Lógica para el modal de reconocimientos
         const modal = document.getElementById("modal-reconocimiento");
@@ -501,10 +743,59 @@ Asimismo, motivado por la importancia de la privacidad en la era digital, tengo 
 
         closeBtn.onclick = () => modal.classList.remove('show');
 
+        // Lógica para el modal de intereses
+        const modalIntereses = document.getElementById("modal-intereses");
+        const tituloInteres = document.getElementById("titulo-interes-modal");
+        const descInteres = document.getElementById("desc-interes-modal");
+        const iconoInteres = document.getElementById("icono-interes-modal");
+        const closeBtnIntereses = document.querySelector(".close-modal-intereses");
+
+        document.querySelectorAll('.interes').forEach(item => {
+            item.addEventListener('click', () => {
+                const title = item.getAttribute('data-title');
+                const desc = item.getAttribute('data-desc');
+                const iconClass = item.querySelector('i').className;
+
+                modalIntereses.classList.add('show');
+                tituloInteres.textContent = title;
+                descInteres.textContent = desc;
+                iconoInteres.className = iconClass;
+            });
+        });
+
+        closeBtnIntereses.onclick = () => modalIntereses.classList.remove('show');
+
         window.onclick = (event) => {
             if (event.target == modal) {
                 modal.classList.remove('show');
             }
+            if (event.target == modalIntereses) {
+                modalIntereses.classList.remove('show');
+            }
+        }
+
+        // Lógica para mostrar habilidades futuras en la foto
+        const fotoPerfil = document.getElementById('foto-perfil');
+        if(fotoPerfil){
+            fotoPerfil.addEventListener('click', (e) => {
+                // Verificar si se hizo clic en una habilidad específica
+                const skillClicked = e.target.closest('.future-skill');
+                
+                if (skillClicked) {
+                    // Si clic en habilidad: cerrar otras y abrir la seleccionada
+                    document.querySelectorAll('.future-skill').forEach(s => {
+                        if(s !== skillClicked) s.classList.remove('active-skill');
+                    });
+                    skillClicked.classList.toggle('active-skill');
+                } else {
+                    // Si clic en la foto central: abrir/cerrar todo
+                    fotoPerfil.classList.toggle('active');
+                    // Si se cierra el menú principal, cerrar también los motivos
+                    if (!fotoPerfil.classList.contains('active')) {
+                        document.querySelectorAll('.future-skill').forEach(s => s.classList.remove('active-skill'));
+                    }
+                }
+            });
         }
     </script>
 
