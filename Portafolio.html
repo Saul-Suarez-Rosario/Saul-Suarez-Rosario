@@ -711,7 +711,7 @@
     </div>
 
     <!-- Audio de fondo -->
-    <audio id="musica-fondo" loop>
+    <audio id="musica-fondo" loop autoplay>
         <source src="audio_1808fbf07a.mp3" type="audio/mp3">
     </audio>
 
@@ -797,6 +797,51 @@
                 }
             });
         }
+
+        // Lógica para música de fondo (Autoplay y control)
+        const audio = document.getElementById("musica-fondo");
+        const musicIcon = document.getElementById("music-icon");
+        const musicToggle = document.getElementById("music-toggle");
+
+        audio.volume = 0.1; // Volumen suave
+
+        function updateIcon() {
+            if (audio.paused) {
+                musicIcon.classList.remove("fa-volume-high");
+                musicIcon.classList.add("fa-volume-xmark");
+            } else {
+                musicIcon.classList.remove("fa-volume-xmark");
+                musicIcon.classList.add("fa-volume-high");
+            }
+        }
+
+        // Función para activar audio en la primera interacción si el autoplay falla
+        const playOnInteraction = () => {
+            audio.play().then(() => {
+                updateIcon();
+            });
+            document.removeEventListener('click', playOnInteraction);
+        };
+
+        // Intentar reproducir automáticamente al cargar
+        audio.play().then(() => {
+            updateIcon();
+        }).catch(error => {
+            // Si el navegador bloquea el autoplay, reproducir en la primera interacción
+            document.addEventListener('click', playOnInteraction);
+        });
+
+        // Listener para el botón de música
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.removeEventListener('click', playOnInteraction); // Cancelar autoplay forzado si el usuario interactúa manualmente
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            updateIcon();
+        });
     </script>
 
     <script src="script.js"></script>
