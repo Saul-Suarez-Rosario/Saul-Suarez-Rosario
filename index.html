@@ -712,7 +712,7 @@
 
     <!-- Audio de fondo -->
     <audio id="musica-fondo" loop autoplay>
-        <source src="Musica%20Suave.mp3" type="audio/mp3">
+        <source src="Musica Suave.mp3" type="audio/mp3">
     </audio>
 
     <!-- Botón de control de música -->
@@ -803,14 +803,6 @@
         const musicIcon = document.getElementById("music-icon");
         const musicToggle = document.getElementById("music-toggle");
 
-        // Recuperar posición y estado del almacenamiento local
-        const savedTime = localStorage.getItem('bgMusicTime');
-        const savedState = localStorage.getItem('bgMusicPlaying');
-
-        if (savedTime) {
-            audio.currentTime = parseFloat(savedTime);
-        }
-
         audio.volume = 0.1; // Volumen suave
 
         function updateIcon() {
@@ -823,14 +815,6 @@
             }
         }
 
-        function saveAudioState() {
-            localStorage.setItem('bgMusicTime', audio.currentTime);
-            localStorage.setItem('bgMusicPlaying', !audio.paused);
-        }
-
-        window.addEventListener('beforeunload', saveAudioState);
-        setInterval(saveAudioState, 1000);
-
         // Función para activar audio en la primera interacción si el autoplay falla
         const playOnInteraction = () => {
             audio.play().then(() => {
@@ -839,19 +823,13 @@
             document.removeEventListener('click', playOnInteraction);
         };
 
-        // Lógica de reproducción inicial
-        const shouldPlay = savedState === 'true' || savedState === null;
-
-        if (shouldPlay) {
-            audio.play().then(() => {
-                updateIcon();
-            }).catch(error => {
-                document.addEventListener('click', playOnInteraction);
-            });
-        } else {
-            audio.pause();
+        // Intentar reproducir automáticamente al cargar
+        audio.play().then(() => {
             updateIcon();
-        }
+        }).catch(error => {
+            // Si el navegador bloquea el autoplay, reproducir en la primera interacción
+            document.addEventListener('click', playOnInteraction);
+        });
 
         // Listener para el botón de música
         musicToggle.addEventListener('click', (e) => {
@@ -863,7 +841,6 @@
                 audio.pause();
             }
             updateIcon();
-            saveAudioState();
         });
     </script>
 
