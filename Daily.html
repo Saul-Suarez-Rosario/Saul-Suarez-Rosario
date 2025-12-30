@@ -12,6 +12,31 @@
     <!-- Logo -->
      
     <link rel="icon" href="Img/Daily Comics.png" type="img/png">
+    <style>
+        /* Estilos para el botón de música */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #1CB698;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .music-toggle:hover {
+            transform: scale(1.1);
+            background-color: #159b80;
+        }
+    </style>
 </head>
 
 <body>
@@ -216,6 +241,16 @@
     <footer>© 2025 Saul Suarez Rosario. Todos los derechos reservados.
 
     </footer>
+
+    <!-- Audio de fondo -->
+    <audio id="musica-fondo" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Botón de control de música -->
+    <div class="music-toggle" id="music-toggle" title="Activar/Desactivar Música">
+        <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
+    </div>
 
     <script src="script.js"></script>
 </body>

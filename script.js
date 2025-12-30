@@ -135,5 +135,81 @@ document.addEventListener('DOMContentLoaded', function(){
             contactForm.addEventListener('submit', handleFormSubmit);
         }
     }catch(e){}
+
+    // Iniciar lógica de música persistente
+    initMusicPlayer();
 });
 
+function initMusicPlayer() {
+    const audio = document.getElementById("musica-fondo");
+    const musicBtn = document.getElementById("music-toggle");
+    const musicIcon = document.getElementById("music-icon");
+
+    if (!audio || !musicBtn || !musicIcon) return;
+
+    audio.volume = 0.10; // Volumen suave
+
+    // 1. Recuperar estado guardado
+    const savedTime = localStorage.getItem('bgMusicTime');
+    // Por defecto reproducir (null) o si estaba sonando (true)
+    const storedStatus = localStorage.getItem('bgMusicPlaying');
+    const shouldPlay = storedStatus === null || storedStatus === 'true';
+
+    if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+    }
+
+    const updateIcon = (playing) => {
+        if (playing) {
+            musicIcon.classList.remove("fa-volume-xmark");
+            musicIcon.classList.add("fa-music");
+        } else {
+            musicIcon.classList.remove("fa-music");
+            musicIcon.classList.add("fa-volume-xmark");
+        }
+    };
+
+    // 2. Intentar reproducir automáticamente si estaba activado
+    if (shouldPlay) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                updateIcon(true);
+                localStorage.setItem('bgMusicPlaying', 'true');
+            }).catch(error => {
+                console.log("Autoplay bloqueado, esperando interacción:", error);
+                updateIcon(false);
+                // Intentar reproducir al primer clic en cualquier parte
+                const playOnInteraction = () => {
+                    audio.play().then(() => {
+                        updateIcon(true);
+                        localStorage.setItem('bgMusicPlaying', 'true');
+                    }).catch(e => console.log(e));
+                    document.removeEventListener('click', playOnInteraction);
+                };
+                document.addEventListener('click', playOnInteraction);
+            });
+        }
+    } else {
+        updateIcon(false);
+    }
+
+    // 3. Control del botón
+    musicBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (audio.paused) {
+            audio.play();
+            updateIcon(true);
+            localStorage.setItem('bgMusicPlaying', 'true');
+        } else {
+            audio.pause();
+            updateIcon(false);
+            localStorage.setItem('bgMusicPlaying', 'false');
+        }
+    });
+
+    // 4. Guardar el tiempo actual antes de cambiar de página
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('bgMusicTime', audio.currentTime);
+    });
+}
