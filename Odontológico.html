@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odontológico Rodríguez Alcántara</title>
+
+    <!-- Íconos y CSS general (mismo del portafolio) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="CSS/Odontológico.css">
+
+    <!-- Logo -->
+    <link rel="icon" href="Hospital Odontológico/Logo del proyecto.png" type="img/png">
+    <style>
+        /* Estilos para el botón de música */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #1CB698;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .music-toggle:hover {
+            transform: scale(1.1);
+            background-color: #159b80;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="contenedor-header">
+        <header>
+            <div class="logo">
+                 <img src="Img/Logo.png" alt="Logo Personal">
+            </div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">VOLVER</a></li>
+                    <li><a href="#inicio">INICIO</a></li>
+                    <li><a href="#informacion">INFORMACIÓN</a></li>
+                    <li><a href="#servicios">SERVICIOS</a></li>
+                    <li><a href="#tipos-atencion">TIPOS DE ATENCIÓN</a></li>
+                    <li> <a href="#pruebas">PRUEBAS</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle" id="theme-toggle" title="Alternar tema">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </div>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+    </div>
+
+    <!-- SECCIÓN PRINCIPAL -->
+    <section id="inicio" class="inicio">
+        <div class="contenido-banner">
+            <div class="contenedor-img">
+                <img src="Hospital Odontológico/imagenes/img.png" alt="Nutri Mart Logo">
+            </div>
+
+            <h1>Odontológico Rodríguez Alcántara</h1>
+            <h2>Hospital Odontológico</h2>
+            <h2>Página web (2025-11-18)</h2>
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN -->
+    <section id="informacion" class="sobremi">
+        <div class="contenido-seccion">
+            <h2>Información</h2>
+            <p>
+                <span>Hospitla Odontológico Rodríguez Alcántara:</span> Somos un centro especializado en el cuidado de la salud bucal para niños y adultos.
+                 Ofrecemos atención odontológico integral con profesionales capacitados, tecnología moderna y un trato humano y cercano. Nuestro compromiso 
+                 es brindarte una sonrisa sana, funcional y hermosa en un ambiente seguro y confiable.
+                </p>
+
+            <div class="fila">
+                <div class="col">
+                    <h3>Misión</h3>
+                    <p>
+                        Brindar servicios Odontológicos integrales de alta calidad, con un enfoque humano, ético
+                        y profesional, utilizando tecnología moderna y un equipo altamente capacitado para cuidar,
+                        prevenir y mejorar la salud bucal de nuestros pacientes, contribuyendo así a su bienestar y calidad de vida.
+                    </p>
+                    <h3>Visión</h3>
+                    <p>
+                        Ser el hospital odontológico líder y referente en la región, reconocido por la excelencia 
+                        en nuestros servicios, la innovación tecnologíca, la confianza de nuestros pacientes y el
+                        compromiso con la salud y la estética dental de la comunidad.
+                    </p>
+                </div>
+
+                <div class="col">
+                    <h3>Valores</h3>
+                    <ul>
+                        <li><strong>Ética profesional:</strong> Actuamos con honestidad, transparencia y responsabilidad.</li>
+                        <li><strong>Compromiso con el paciente:</strong> El bienestar del paciente es nuestra prioridad.</li>
+                        <li><strong>Calidad y excelencia:</strong> Buscamos la mejora continua en cada servicio.</li>
+                        <li><strong>Calidez humana:</strong> Ofrecemos un trato respetuoso, cercano y empático.</li>
+                        <li><strong>Innovación:</strong> Aplicamos tecnología y técnicas modernas para mejores resultados.</li>
+                        <li><strong>Trabajo en equipo:</strong> Fomentamos la colaboración entre nuestros profesionales.</li>
+                        <li><strong>Responsabilidad social:</strong> Contribuimos al bienestar de nuestra comunidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="skills">
+        <div class="contenido-seccion">
+            <h2>Servicios</h2>
+
+            <div class="fila">
+
+                <div class="col">
+                    <h3>¿Qué ofrecemos?</h3>
+
+                    <div class="skill">
+                        <span>Atención al paciente</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span>Calidad en los tratamientos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 98%;"><span>98%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Tecnología moderna</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 95%;"><span>95%</span></div>
+                        </div>
+                    </div>
+
+                     <div class="skill">
+                        <span>Higiene y bioseguridad</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 97%;"><span>97%</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col">
+                    <h3>Ventajas</h3>
+
+                    <div class="skill">
+                        <span>Precios accesibles y planes de pago</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 95%;"><span>95%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Ubicación céntrica y fácil acceso</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 98%;"><span>98%</span></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skill">
+                        <span>Atención rápida y sin largas esperas</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 96%;"><span>96%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span>Garantía en nuestros tratamientos</span>
+                        <div class="barra-skill">
+                            <div class="progreso" style="width: 100%;"><span>100%</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS / GALERÍA -->
+    <section id="tipos-atencion" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>Tipos de Atención</h2>
+
+            <div class="galeria">
+
+                <div class="proyecto">
+                    <img src="Img/Odontológico/Dentista Adulto.jfif" alt="Dentista Adulto">
+                    <div class="overlay">
+                        <h3>Adultos</h3>                    
+                    </div>
+                </div>
+
+                <div class="proyecto">
+                    <img src="Img/Odontológico/Dentis Niños.jfif" alt="Dentista Niño">
+                    <div class="overlay">
+                        <h3>Niños</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRUEBA -->
+   <section id="pruebas" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>Pruebas</h2>
+
+            <div class="galeria">
+
+              <div class="proyecto">
+    <img src="Img/Odontológico/Codigos.png" alt="codigos">
+    <div class="overlay">
+        <h3>Codigos Iniciales</h3>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/Odontológico/Proceso y unos cambios.png" alt="Proceso y unos cambios">
+    <div class="overlay">
+        <h3>Proceso y unos cambios</h3>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/Odontológico/Logo del proyecto.png" alt="Logo de proyecto">
+    <div class="overlay">
+        <h3>Logo de proyecto</h3>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Hospital Odontológico/imagenes/img.png" alt="Resultado Final">
+    <div class="overlay">
+        <h3>Resultado Final</h3>
+        <a href="Hospital Odontológico/Proyecto.html" class="btn">Interactuar</a>
+    </div>
+</div>
+    </section>
+              
+
+    <!-- FOOTER -->
+       <footer>
+        <a href="#inicio" class="arriba">
+            <i class="fa-solid fa-angles-up"></i>
+        </a>
+        <div class="redes">
+             <a href="https://www.linkedin.com/in/saul-suarez-rosario-b97aba389/" target="_blank">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/Saul-Suarez-Rosario" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://www.instagram.com/saulsuarez2502/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+     <a href="mailto:Saulsuarezrosario25022008@gmail.com" target="_blank">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+        </div>
+    </footer>
+
+    <footer>© 2025 Saul Suarez Rosario. Todos los derechos reservados.
+
+    </footer>
+
+    <!-- Audio de fondo -->
+    <audio id="musica-fondo" loop autoplay>
+        <source src="Musica%20Suave.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Botón de control de música -->
+    <div class="music-toggle" id="music-toggle" title="Activar/Desactivar Música">
+        <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
+    </div>
+
+    <script>
+        // Lógica para música de fondo (Autoplay y control)
+        const audio = document.getElementById("musica-fondo");
+        const musicIcon = document.getElementById("music-icon");
+        const musicToggle = document.getElementById("music-toggle");
+
+        // Recuperar posición y estado del almacenamiento local
+        const savedTime = localStorage.getItem('bgMusicTime');
+
+        if (savedTime) {
+            const time = parseFloat(savedTime);
+            if (!isNaN(time)) {
+                if (audio.readyState >= 1) {
+                    audio.currentTime = time;
+                } else {
+                    audio.addEventListener('loadedmetadata', () => {
+                        audio.currentTime = time;
+                    }, { once: true });
+                }
+            }
+        }
+
+        audio.volume = 0.1; // Volumen suave
+
+        function updateIcon() {
+            if (audio.paused) {
+                musicIcon.classList.remove("fa-volume-high");
+                musicIcon.classList.add("fa-volume-xmark");
+            } else {
+                musicIcon.classList.remove("fa-volume-xmark");
+                musicIcon.classList.add("fa-volume-high");
+            }
+        }
+
+        function saveAudioState() {
+            localStorage.setItem('bgMusicTime', audio.currentTime);
+        }
+
+        window.addEventListener('beforeunload', saveAudioState);
+        setInterval(saveAudioState, 1000); // Guardado periódico por seguridad
+
+        // Función para activar audio en la primera interacción si el autoplay falla
+        const playOnInteraction = () => {
+            audio.play().then(() => {
+                updateIcon();
+            });
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('keydown', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+        };
+
+        // Intentar reproducir siempre al cargar
+        audio.play().then(() => {
+            updateIcon();
+        }).catch(error => {
+            document.addEventListener('click', playOnInteraction);
+            document.addEventListener('keydown', playOnInteraction);
+            document.addEventListener('touchstart', playOnInteraction);
+        });
+
+        // Listener para el botón de música
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.removeEventListener('click', playOnInteraction); // Cancelar autoplay forzado si el usuario interactúa manualmente
+            document.removeEventListener('keydown', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            updateIcon();
+            saveAudioState();
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
