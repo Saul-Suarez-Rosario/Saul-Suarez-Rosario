@@ -1,0 +1,162 @@
+body {  
+    background-image: url('imagenes/fondo.jpeg');
+    background-size:cover;   
+    background-position: center;  
+    height:100vh;   
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    color: black;  
+    text-shadow:2px 2px 4px rgba(0,0,0,0.7);  
+    text-align: center;
+}  
+
+.menu { 
+    background-color: #d2b4de  ;  
+    overflow: hidden;  
+}  
+
+.menu a {  
+    float: left;  
+    display: block;  
+    color: black;  
+    text-align: center;  
+    padding: 14px 16px;  
+    text-decoration: none;  
+}  
+
+.menu a:hover {  
+    background-color: #f8c471;  
+}  
+
+.dropdown {  
+    float: left;  
+    overflow: hidden;  
+}  
+
+.dropdown .dropbtn {  
+    cursor: pointer;  
+    border: none;  
+    outline: none;  
+    color: black;  
+    padding: 14px 16px;  
+    background-color: inherit;  
+    font-family: inherit;  
+    font-size: inherit;  
+    margin: 0;  
+}  
+
+.dropdown-content {  
+    display: none;  
+    position: absolute;  
+    background-color:black;  
+    min-width: 160px;  
+    box-shadow: 0px 8px 16px 0px #27ae60;  
+    z-index: 1;  
+}  
+
+.dropdown-content a {  
+    float: none;  
+    color: white;  
+    padding: 12px 16px;  
+    text-decoration: none;  
+    text-align: left;  
+}  
+
+.dropdown-content a:hover {  
+    background-color: #d2b4de ;  
+}  
+
+.dropdown:hover .dropdown-content {  
+    display: block;  
+}  
+
+.dropdown:hover .dropbtn {  
+    background-color: #f8c471;  
+}  
+
+
+header{
+    padding: 150px;
+    display:flex;
+    padding: auto;
+    width: 100px;
+    text-align: justifys;
+}
+
+    
+.animar {  
+    animation: mover 1s infinite alternate;
+    width: 400px;  
+}  
+
+@keyframes mover {  
+    0% { transform: translateX(0); }  
+    100% { transform: translateX(100px); }  
+}  
+
+img {  
+    width: 305px; 
+    padding: 1.5%;
+    transition: transform 0.3s ease;
+    text-align: center;
+    border-radius: 20%;
+}  
+
+img:hover{
+    transform: scale(1.1);
+}
+.zoom {  
+    transform: scale(1.2);  
+}  
+
+  
+
+h1{
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+        transform: translateY(-20px);
+        
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content{
+padding:20px;
+text-align:center;
+font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+color:black;
+
+}
+
+
+.div {  
+    background-size: 100% 100%;
+    animation: slider 5s  linear infinite;
+    width: 195px;
+    padding: 195px;
+    border-radius: 16%;
+    
+ }  
+ 
+ .div:hover{
+     transform: scale(1.1);
+ }
+ .zoom {  
+     transform: scale(1.2);  
+ }  
+ 
+ @keyframes slider{
+     0%{background-image: url(imagenes/odontologo.jpg)}
+     30%{background-image: url(imagenes/Odontologa2.jpg)}
+     60%{background-image: url(imagenes/odontogo3.jpg)}
+     100%{background-image: url(imagenes/odontogo4.jpg)}
+ }
+ 
