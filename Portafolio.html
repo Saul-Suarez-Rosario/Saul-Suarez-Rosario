@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Portafolio Digital</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="icon" href="Img/Logo.png" type="img/png">
+    <style>
+        /* Estilos para el Modal de Reconocimientos */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 10000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.85); 
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background-color: #252A2E;
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            animation: zoomIn 0.3s;
+        }
+        @keyframes zoomIn {
+            from {transform: scale(0.7)} 
+            to {transform: scale(1)}
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #aaa;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+        .texto-modal p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .texto-modal .fecha-reconocimiento {
+            font-weight: bold;
+            color: #ddd;
+        }
+        .reconocimiento-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-header">
+        <header>
+            <div class="logo">
+                <img src="Img/Logo.png" alt="Logo Personal"></a>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#inicio" onclick="seleccionar()">INICIO</a></li>
+                    <li><a href="#sobremi" onclick="seleccionar()">SOBRE MÍ</a></li>
+                    <li><a href="#skills" onclick="seleccionar()">HABILIDADES</a></li>
+                    <li><a href="#curriculum" onclick="seleccionar()">CURRÍCULUM</a></li>
+                    <li><a href="#portfolio" onclick="seleccionar()">PORTAFOLIO</a></li>
+                    <li><a href="#reconocimientos" onclick="seleccionar()">RECONOCIMIENTOS</a></li>
+            </nav>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <div class="theme-toggle" id="theme-toggle" title="Alternar tema">
+                <i class="fa-solid fa-moon" id="theme-icon"></i>
+            </div>
+        </header>
+    </div>
+
+    <section id="inicio" class="inicio">
+        <div class="contenido-banner">
+            <div class="contenedor-img">
+                <img src="Img/SaulSuarez.jpg" alt="Foto de Saul Suarez">
+            </div>
+            <h1>Saul Suarez</h1>
+            <h2>Técnico en Soporte de Redes, Sistemas y Administración de Aplicaciones Informáticas</h2>
+           <div class="redes">
+    <a href="https://www.linkedin.com/in/saul-suarez-rosario-b97aba389/" target="_blank">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/saulsuarezrosario25022008-lab" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://www.instagram.com/saulsuarez2502/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+</div>
+        </div>
+    </section>
+
+    <section id="sobremi" class="sobremi">
+        <div class="contenido-seccion">
+            <h2>Sobre Mí</h2>
+            <p><span>Hola, soy Saul Suarez.</span> He culminado mis estudios de bachiller técnico en informática y actualmente me enfoco en seguir fortaleciendo mis conocimientos en esta área. Poseo un gran interés por el mundo tecnológico y, a futuro, tengo la firme ambición de formarme e integrarme en el ámbito de la mecatrónica para desarrollar proyectos innovadores.
+
+Asimismo, motivado por la importancia de la privacidad en la era digital, tengo un especial interés en profundizar en el campo de la ciberseguridad. Me caracterizo por ser una persona puntual, responsable y plenamente comprometida con cada proyecto y meta de aprendizaje que asumo.
+            <div class="fila">
+                <div class="col">
+                    <h3>Datos Personales</h3>
+                    <ul>
+                        <li>
+                            <strong>Cumpleaños</strong>
+                            25-02-2008
+                        </li>
+                        <li>
+                            <strong>Teléfono</strong>
+                            +1 809-637-2476
+                        </li>
+                        <li>
+                            <strong>Email</strong>
+                            saulsuarezrosario25022008@gmail.com
+                        </li>
+                        <li>
+                            <strong>Dirección</strong>
+                            Santo Domingo, República Dominicana
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h3>Intereses</h3>
+                    <div class="contenedor-intereses">
+                        <div class="interes">
+                            <i class="fa-solid fa-gamepad"></i>
+                            <span>JUEGOS</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-solid fa-headphones"></i>
+                            <span>MÚSICA</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-solid fa-computer"></i>
+                            <span>TECNOLOGIA</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-solid fa-baseball-ball"></i>
+                            <span>DEPORTE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <div class="contenido-seccion">
+            <h2>Habilidades</h2>
+            <div class="fila">
+                <div class="col">
+                    <h3>Técnicas</h3>
+                     <div class="skill">
+                        <span>Microsoft Office</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>75%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <span>JavaScript</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>50%</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <span>HTML & CSS</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>65%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3>Profesionales</h3>
+                    <div class="skill">
+                        <span>Comunicación</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>90%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <span>Trabajo en Equipo</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>90%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <span>Resolución de Problemas</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>85%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <span>Dedicación</span>
+                        <div class="barra-skill">
+                            <div class="progreso">
+                                <span>100%</span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="curriculum">
+        <div class="contenido-seccion">
+            <h2>Currículum</h2>
+            <div class="fila">
+                <div class="col izquierda">
+                    <h3>Educación</h3>
+                    <div class="item izq">
+                        <h4>Bachiller Técnico</h4>
+                        <span class="casa">Politécnico Parroquial Betania</span>
+                        <span class="fecha">2022 - 2025</span>
+                        <p>Aquí puedes describir brevemente los logros obtenidos durante tu bachillerato, enfoque de tu carrera técnica.</p>
+                        <div class="conectori">
+                            <div class="circuloi"></div>
+                        </div>
+                    </div>
+                    <div class="item izq">
+                        <h4>Mantenimiento de equipos</h4>
+                        <span class="casa">Instituto</span>
+                        <span class="fecha">2024 - 2025</span>
+                        <p>Capacitación técnica en mantenimiento preventivo y correctivo de ordenadores. Incluyó diagnóstico de fallas, ensamblaje de hardware, limpieza de componentes internos, instalación de sistemas operativos y optimización del rendimiento.</p>
+                        <div class="conectori">
+                            <div class="circuloi"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col derecha">
+                    <h3>Experiencia</h3>
+                    <div class="item der">
+                        <h4>Soporte Técnico en Redes</h4>
+                        <span class="casa">Pasantía</span>
+                        <span class="fecha">2024 - 2025</span>
+                        <p>Desempeño de tareas de mantenimiento preventivo y correctivo, administración de permisos de usuario y solución de problemas de conectividad a Internet.</p>
+                        <div class="conectord">
+                            <div class="circulod"></div>
+                        </div>
+                    </div>
+                    <div class="item der">
+                        <h4>Proyectos Personales</h4>
+                        <span class="casa">Desarrollo Web</span>
+                        <span class="fecha">2022 - 2025</span>
+                        <p>Creación de páginas web estáticas utilizando HTML, CSS y JavaScript para pequeños proyectos innovadores.</p>
+                        <div class="conectord">
+                            <div class="circulod"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>PORTAFOLIO</h2>
+            <div class="galeria">
+              <div class="proyecto">
+    <img src="Img/Nutri Mart.png" alt="Proyecto 1">
+    <div class="overlay">
+        <h3>Nutri Mart</h3>
+        <p>Supermercado Online</p>
+        <p>2025-11-18</p>
+        <a href="Nutri.html" class="btn">Ver más</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/Scape Room.png" alt="Proyecto 2">
+    <div class="overlay">
+        <h3>Scape Room</h3>
+        <p>Feria Tecnológica</p>
+        <p>2025-11-17</p>
+        <a href="Scape.html" class="btn">Ver más</a>
+    </div>
+</div>
+
+<div class="proyecto">
+    <img src="Img/Daily Comics.png" alt="Proyecto 3" class="imagen-animada">
+    <div class="overlay">
+        <h3>Daily Comics</h3>
+        <p>Proyecto web de cómic</p>
+        <p>2025-01-</p>
+        <a href="Daily.html" class="btn">Ver más</a>
+    </div>
+</div>
+
+
+            </div>
+        </div>
+    </section>
+    
+    <section id="reconocimientos" class="reconocimientos">
+        <div class="contenido-seccion">
+            <h2>Reconocimientos</h2>
+            <div class="contenedor-reconocimientos">
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (2).png" alt="Reconocimiento 2">
+                    </div>                 
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (23/06/2025)</p>
+                    <p>Este reconocimiento destaca mi excelente desempeño académico 
+                        y mi participación activa en actividades extracurriculares, 
+                        reflejando mi compromiso con el aprendizaje, la superación 
+                        personal y mi aporte positivo a la comunidad estudiantil..</p>
+                </div>
+
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (4).png" alt="Reconocimiento 4">
+                    </div> 
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (04/03/2025)</p>
+                    <p>Certificación por la culminación satisfactoria de 60 horas de pasantía, 
+                        participando activamente en entrenamientos de técnicas de emergencias 
+                        a nivel básico, fortaleciendo habilidades de responsabilidad, trabajo 
+                        en equipo y servicio comunitario.</p>
+                </div>
+
+                 <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (5).png" alt="Reconocimiento 5">
+                    </div>   
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (2025)</p>
+                    <p>Certificado de participación en la Olimpiada de Ciencias Naturales nivel secundario, 
+                        destacando mi interés por el conocimiento, el pensamiento crítico y el compromiso 
+                        con mi formación académica. </p>
+                </div>
+
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (7).png" alt="Reconocimiento 7">
+                    </div>                 
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (2025)</p>
+                    <p>Mención por desempeño destacado en competencias de conocimientos sociales. 
+                        Este logro valida mis habilidades en pensamiento crítico, 
+                        investigación y comprensión de procesos históricos y 
+                        sociales dentro del ámbito escolar.</p>
+                </div>
+
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/certificado-claseflix_page-0001.jpg" alt="Reconocimiento 8">
+                    </div>
+                    <p class="fecha-reconocimiento">Certificación de Claseflix (15/10/2025)</p>
+                    <p>Diploma que acredita la finalización exitosa del curso de Inglés para Principiantes 
+                        impartido por Claseflix en octubre de 2025. Esta formación marca el inicio de mi desarrollo 
+                        en competencias bilingües, demostrando iniciativa para el aprendizaje autónomo.</p>
+                </div>
+
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (6).png" alt="Reconocimiento 6 ">
+                    </div>              
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (16/02/2024)</p>
+                    <p>Certificado que premia la perseverancia y la responsabilidad. 
+                        Más allá del ámbito académico, este reconocimiento refleja mi 
+                        enfoque en la disciplina y la mejora constante como pilares de mi desarrollo 
+                        profesional y personal.</p>
+                </div>
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (1).png" alt="Reconocimiento 1">
+                    </div>
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (18/02/2020)</p>
+                    <p>Este reconocimiento refleja mi esfuerzo, 
+                        disciplina y compromiso con el buen desempeño académico. 
+                        Representa una motivación para continuar superándome y 
+                        alcanzando nuevas metas en mi formación educativa.</p>
+                </div>
+
+                <div class="reconocimiento-item">
+                    <div class="reconocimiento-imagen">
+                        <img src="Img/Reconocimiento (3).png" alt="Reconocimiento 3">
+                    </div>
+                    <p class="fecha-reconocimiento">Politécnico Parroquial Betania (18/02/2020)</p>
+                    <p>Este reconocimiento resalta mi responsabilidad y 
+                        la práctica de valores éticos y ciudadanos, 
+                        reflejando mi compromiso con una conducta ejemplar 
+                        dentro de la comunidad educativa, junto a mi buen 
+                        desempeño académico en el mismo período.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <a href="#inicio" class="arriba">
+            <i class="fa-solid fa-angles-up"></i>
+        </a>
+        <div class="redes">
+             <a href="https://www.linkedin.com/in/saul-suarez-rosario-b97aba389/" target="_blank">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/saulsuarezrosario25022008-lab" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://www.instagram.com/saulsuarez2502/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="mailto:Saulsuarezrosario25022008@gmail.com" target="_blank">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+        </div>
+    </footer>
+
+    <footer>© 2025 Saul Suarez Rosario. Todos los derechos reservados.
+
+    </footer>
+    
+    <!-- Modal para visualizar reconocimientos -->
+    <div id="modal-reconocimiento" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="img-modal" src="" alt="Imagen Reconocimiento">
+            <div class="texto-modal">
+                <p id="fecha-modal" class="fecha-reconocimiento"></p>
+                <p id="desc-modal"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para el modal de reconocimientos
+        const modal = document.getElementById("modal-reconocimiento");
+        const modalImg = document.getElementById("img-modal");
+        const modalFecha = document.getElementById("fecha-modal");
+        const modalDesc = document.getElementById("desc-modal");
+        const closeBtn = document.querySelector(".close-modal");
+
+        document.querySelectorAll('.reconocimiento-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const fecha = item.querySelector('.fecha-reconocimiento');
+                const desc = item.querySelector('p:last-of-type'); 
+
+                modal.classList.add('show');
+                modalImg.src = img.src;
+                modalFecha.textContent = fecha ? fecha.textContent : '';
+                modalDesc.textContent = desc ? desc.textContent : '';
+            });
+        });
+
+        closeBtn.onclick = () => modal.classList.remove('show');
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.classList.remove('show');
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
