@@ -547,22 +547,39 @@ html{
     padding: 20px 0;
 }
 
-.contenedor-reconocimientos {
+.reconocimientos-swiper {
+    width: 100%;
+    padding: 40px 0 60px 0;
+}
+
+.reconocimientos .swiper-slide {
+    width: 320px;
+    opacity: 0.5;
+    filter: blur(2px) grayscale(50%);
+    transition: all 0.5s ease;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 30px;
-    margin-top: 40px;
+    align-items: center;
+}
+
+.reconocimientos .swiper-slide-active {
+    opacity: 1;
+    filter: blur(0) grayscale(0);
 }
 
 .reconocimiento-item {
-    width: 300px;
+    position: relative;
+    width: 100%;
+    max-width: 320px;
     background-color: var(--bg-dark);
-    padding: 30px;
+    padding: 35px 25px;
     border-radius: 15px;
     text-align: center;
     transition: 0.3s;
     box-shadow: 0 0 15px rgba(0, 110, 255, 0.1);
+    margin: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .reconocimiento-item:hover {
@@ -570,9 +587,24 @@ html{
     box-shadow: 0 0 25px rgba(0, 110, 255, 0.3);
 }
 
+.badge-featured {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 110, 255, 0.4);
+}
+
 .reconocimiento-imagen {
     width: 100%;
-    height: 200px;
+    height: 180px;
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
@@ -611,6 +643,17 @@ html{
     font-size: 14px;
     line-height: 20px;
     color: #d1d1d1;
+}
+
+/* Estilos para controles de Swiper */
+.reconocimientos .swiper-button-next,
+.reconocimientos .swiper-button-prev {
+    color: var(--color-primary);
+    transform: scale(0.7);
+}
+
+.reconocimientos .swiper-pagination-bullet-active {
+    background: var(--color-primary);
 }
 
 /* SECCION PORTFOLIO */
@@ -1013,11 +1056,6 @@ footer .arriba:hover{
         border-left: 2px solid var(--color-primary);
         margin: 0;
         padding-left: 20px;
-    }
-
-    .contenedor-reconocimientos {
-        flex-direction: column;
-        align-items: center;
     }
 
     .reconocimiento-item {

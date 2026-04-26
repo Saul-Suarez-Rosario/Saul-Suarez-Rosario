@@ -583,6 +583,19 @@
             <h2>Reconocimientos</h2>
             <div class="swiper reconocimientos-swiper">
                 <div class="swiper-wrapper">
+                    <!-- Reconocimiento Principal: CCNA -->
+                    <div class="swiper-slide">
+                        <div class="reconocimiento-item">
+                            <span class="badge-featured">Destacado</span>
+                            <div class="reconocimiento-imagen">
+                                <img src="Img/CCNA-_Introduction_to_Networks_certificate_20260707-itla-edu-do_25f62428-1139-4ae3-9a3e-8c94312bafcb_page-0001.jpg" alt="CCNA Certificate">
+                            </div>
+                            <h3>CCNA: Introduction to Networks</h3>
+                            <p class="fecha-reconocimiento">ITLA / Cisco Networking Academy [25/04/2026]</p>
+                            <p>Certificación que valida conocimientos fundamentales en redes, direccionamiento IP, protocolos y seguridad básica, pilar fundamental para mi especialización en Ciberseguridad.</p>
+                        </div>
+                    </div>
+
                     <div class="swiper-slide">
                         <div class="reconocimiento-item">
                             <div class="reconocimiento-imagen">
@@ -754,16 +767,24 @@
 
         // Inicialización de Swiper
         const swiperReconocimientos = new Swiper('.reconocimientos-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 30,
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
             loop: true,
-            autoplay: { delay: 4000, disableOnInteraction: false },
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2.5,
+                slideShadows: true,
+            },
             pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-            breakpoints: {
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 }
-            }
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
         });
 
         closeBtn.onclick = () => modal.classList.remove('show');
