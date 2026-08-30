@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Mart - Fresh & Healthy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="market.css">
+    <link rel="icon" href="Nutri1.png" type="image/png">
+</head>
+<body>
+    <!-- ===========================
+         MAGIC INTRO ANIMATION
+         =========================== -->
+    <div class="magic-intro" id="magicIntro">
+        <div class="intro-container">
+            <div class="sparkles">
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+            </div>
+
+            <div class="logo-reveal">
+                <svg class="logo-svg" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8"/>
+                            <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+                        </radialGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <g class="logo-nu-group">
+                        <text x="40" y="110" font-family="Arial Black, sans-serif" font-size="90" font-weight="900" fill="#E87722" filter="url(#glow)">Nu</text>
+                    </g>
+                    
+                    <g class="logo-tri-group">
+                        <text x="150" y="110" font-family="Arial Black, sans-serif" font-size="90" font-weight="900" fill="#B8202E" filter="url(#glow)">tri</text>
+                    </g>
+                    
+                    <g class="logo-mart-group">
+                        <path id="martCurve" d="M 240 90 Q 310 40 380 70" fill="none"/>
+                        <text font-family="Arial Black, sans-serif" font-size="32" font-weight="900" fill="#1F4E3D" filter="url(#glow)">
+                            <textPath href="#martCurve" startOffset="50%" text-anchor="middle">MART</textPath>
+                        </text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="magic-name">
+                <span class="magic-word word-nu">Nu</span>
+                <span class="magic-word word-tri">tri</span>
+                <span class="magic-word word-mart">MART</span>
+            </div>
+
+            <div class="magic-line"></div>
+            <p class="magic-tagline">Fresh & Healthy</p>
+        </div>
+    </div>
+
+    <!-- ===========================
+         NAVBAR
+         =========================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/Nutri.html" class="logo">
+                <svg class="nav-logo-svg" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+                    <text x="40" y="110" font-family="Arial Black, sans-serif" font-size="90" font-weight="900" fill="#E87722">Nu</text>
+                    <text x="150" y="110" font-family="Arial Black, sans-serif" font-size="90" font-weight="900" fill="#B8202E">tri</text>
+                    <path id="martCurveNav" d="M 240 90 Q 310 40 380 70" fill="none"/>
+                    <text font-family="Arial Black, sans-serif" font-size="32" font-weight="900" fill="#1F4E3D">
+                        <textPath href="#martCurveNav" startOffset="50%" text-anchor="middle">MART</textPath>
+                    </text>
+                </svg>
+            </a>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="ofertas.html">Ofertas</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+         HERO SECTION
+         =========================== -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Fresh & Healthy</h1>
+            <p>Los mejores productos frescos directo a tu mesa</p>
+            <span class="discount">Up to 30% OFF</span>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop" alt="Fresh vegetables">
+        </div>
+    </section>
+
+    <!-- ===========================
+         MAIN CONTAINER
+         =========================== -->
+    <div class="main-container" id="productos">
+        <aside class="sidebar">
+            <h3><i class="fas fa-filter"></i> Filtros</h3>
+            
+            <div class="filter-group">
+                <h4>Categorías</h4>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-frutas" value="frutas" onchange="filterProducts()">
+                    <label for="cat-frutas">Frutas</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-verduras" value="verduras" onchange="filterProducts()">
+                    <label for="cat-verduras">Verduras</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-lacteos" value="lacteos" onchange="filterProducts()">
+                    <label for="cat-lacteos">Lácteos</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-panaderia" value="panaderia" onchange="filterProducts()">
+                    <label for="cat-panaderia">Panadería</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-carnes" value="carnes" onchange="filterProducts()">
+                    <label for="cat-carnes">Carnes</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-bebidas" value="bebidas" onchange="filterProducts()">
+                    <label for="cat-bebidas">Bebidas</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Precio</h4>
+                <input type="range" class="price-range" min="0" max="100" value="100" id="priceRange" onchange="filterProducts()">
+                <div class="price-labels">
+                    <span>$0</span>
+                    <span>$100</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="categories">
+                <div class="category-card active" onclick="selectCategory('all', this)">
+                    <i class="fas fa-th-large"></i>
+                    <span>Todos</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('frutas', this)">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>Frutas</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('verduras', this)">
+                    <i class="fas fa-carrot"></i>
+                    <span>Verduras</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('lacteos', this)">
+                    <i class="fas fa-cheese"></i>
+                    <span>Lácteos</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('panaderia', this)">
+                    <i class="fas fa-bread-slice"></i>
+                    <span>Panadería</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('carnes', this)">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span>Carnes</span>
+                </div>
+                <div class="category-card" onclick="selectCategory('bebidas', this)">
+                    <i class="fas fa-wine-bottle"></i>
+                    <span>Bebidas</span>
+                </div>
+            </div>
+
+            <h2>Productos Destacados</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </section>
+    </div>
+
+    <!-- ===========================
+         CART SIDEBAR
+         =========================== -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">
+                <i class="fas fa-credit-card"></i> Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">Producto agregado al carrito</div>
+
+    <!-- ===========================
+         FOOTER
+         =========================== -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Nutri Mart</h3>
+                <p>Tu supermercado de confianza con los mejores productos frescos y saludables.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="#">Sobre Nosotros</a></p>
+                <p><a href="#">Productos</a></p>
+                <p><a href="#">Ofertas</a></p>
+                <p><a href="#">Blog</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Servicio al Cliente</h3>
+                <p><a href="#">Preguntas Frecuentes</a></p>
+                <p><a href="#">Envíos y Entregas</a></p>
+                <p><a href="#">Política de Devoluciones</a></p>
+                <p><a href="#">Términos y Condiciones</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-envelope"></i> contact@nutrimart.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Ciudad</p>
+                <p><i class="fas fa-clock"></i> Lun - Dom: 8am - 9pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nutri Mart. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="market.js"></script>
+</body>
+</html>
