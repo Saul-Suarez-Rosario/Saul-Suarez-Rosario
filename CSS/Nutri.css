@@ -494,6 +494,17 @@ footer .arriba:hover {
     background: linear-gradient(90deg, #F28B1D, #C62828);
 }
 
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
 /* --- RESPONSIVE --- */
 @media screen and (max-width: 980px) {
     nav {
